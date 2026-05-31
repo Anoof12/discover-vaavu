@@ -369,11 +369,18 @@ async function publish() {
   btn.disabled = true;
   setStatus('loading', '⟳ Publishing…');
 
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(siteData, null, 2))));
-  const body    = { message: 'Update site content via admin panel', content };
-  if (fileSHA) body.sha = fileSHA;
-
   try {
+    /* Always fetch the latest SHA right before publishing to avoid conflicts */
+    const check = await fetch(`${API}/repos/${REPO}/contents/${CONTENT_PATH}`, { headers: ghHeaders(token) });
+    if (check.ok) {
+      const checkJson = await check.json();
+      fileSHA = checkJson.sha;
+    }
+
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(siteData, null, 2))));
+    const body    = { message: 'Update site content via admin panel', content };
+    if (fileSHA) body.sha = fileSHA;
+
     const r = await fetch(`${API}/repos/${REPO}/contents/${CONTENT_PATH}`, {
       method:  'PUT',
       headers: { ...ghHeaders(token), 'Content-Type': 'application/json' },
