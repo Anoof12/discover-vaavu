@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discover Vaavu – Islandbreak Excursion</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ═══════════════════════ NAV ═══════════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">
+      <span class="logo-text">Discover Vaavu</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#excursions">Excursions</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#location">Find Us</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-menu" id="closeMenu">&#10005;</button>
+  <ul>
+    <li><a href="#about" class="mob-link">About</a></li>
+    <li><a href="#excursions" class="mob-link">Excursions</a></li>
+    <li><a href="#gallery" class="mob-link">Gallery</a></li>
+    <li><a href="#location" class="mob-link">Find Us</a></li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════ HERO ═══════════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="hero-content" data-reveal>
+    <p class="hero-tagline">Welcome to</p>
+    <h1 class="hero-title">Discover Vaavu</h1>
+    <p class="hero-sub">Islandbreak Excursion &middot; V. Fulidhoo, Maldives</p>
+    <p class="hero-desc">Dive into the crystal-clear waters of Vaavu Atoll. Experience the magic of the Indian Ocean aboard our vessel <em>Jasmine</em>.</p>
+    <a href="#excursions" class="btn-primary">Explore Excursions</a>
+  </div>
+
+  <div class="wave-container">
+    <svg class="wave wave1" viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,60 C360,120 1080,0 1440,60 L1440,120 L0,120 Z"/>
+    </svg>
+    <svg class="wave wave2" viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,80 C480,20 960,120 1440,40 L1440,120 L0,120 Z"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════════════════ STATS ═══════════════════════ -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat-card" data-reveal>
+      <span class="stat-num" data-target="500">0</span><span class="stat-plus">+</span>
+      <p>Happy Guests</p>
+    </div>
+    <div class="stat-card" data-reveal>
+      <span class="stat-num" data-target="8">0</span>
+      <p>Excursion Types</p>
+    </div>
+    <div class="stat-card" data-reveal>
+      <span class="stat-num" data-target="100">0</span><span class="stat-plus">%</span>
+      <p>Satisfaction Rate</p>
+    </div>
+    <div class="stat-card" data-reveal>
+      <span class="stat-num" data-target="5">0</span>
+      <p>Years of Experience</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ ABOUT ═══════════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img-wrap" data-reveal>
+        <div class="about-img-frame">
+          <img src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=800&q=80" alt="Fulidhoo Island" class="about-img" />
+          <div class="img-badge">
+            <span>V. Fulidhoo</span>
+            <small>Vaavu Atoll, Maldives</small>
+          </div>
+        </div>
+      </div>
+      <div class="about-text" data-reveal>
+        <span class="section-label">Our Story</span>
+        <h2>Island Life, <br/><span class="gradient-text">Ocean Adventures</span></h2>
+        <p>Discover Vaavu is the excursion arm of <strong>Island Break Guest House</strong>, nestled on the beautiful island of Fulidhoo in Vaavu Atoll. We bring you the finest ocean adventures the Maldives has to offer — from swimming with whale sharks to watching dolphins dance at sunset.</p>
+        <p>Our boat <strong>Jasmine</strong> is your gateway to Vaavu's pristine reefs, hidden sandbars, and abundant marine life. Every trip is crafted to give you an authentic, unforgettable Maldivian experience.</p>
+        <div class="about-highlights">
+          <div class="highlight"><span class="hi-icon">🐠</span><p>Rich Marine Life</p></div>
+          <div class="highlight"><span class="hi-icon">🛥️</span><p>Private Vessel</p></div>
+          <div class="highlight"><span class="hi-icon">🌊</span><p>Expert Guides</p></div>
+          <div class="highlight"><span class="hi-icon">🏝️</span><p>Local Knowledge</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ EXCURSIONS ═══════════════════════ -->
+<section id="excursions">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <span class="section-label">What We Offer</span>
+      <h2>Our <span class="gradient-text">Excursions</span></h2>
+      <p>Every adventure is tailored to the tides, the season, and your sense of wonder.</p>
+    </div>
+
+    <div class="filter-tabs" data-reveal>
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="water">Water Activities</button>
+      <button class="filter-btn" data-filter="wildlife">Wildlife</button>
+      <button class="filter-btn" data-filter="scenic">Scenic</button>
+    </div>
+
+    <div class="excursions-grid" id="excursionsGrid">
+
+      <div class="ex-card" data-cat="wildlife" data-reveal>
+        <div class="ex-img-wrap">
+          <div class="ex-img" style="background-image:url('https://images.unsplash.com/photo-1560275619-4cc5fa59d3ae?w=600&q=80')"></div>
+          <div class="ex-tag">Wildlife</div>
+        </div>
+        <div class="ex-body">
+          <h3>Whale Shark Encounter</h3>
+          <p>Swim alongside the ocean's gentle giants in one of the world's best whale shark destinations.</p>
+          <div class="ex-meta">
+            <span>⏱ 3–4 hours</span><span>👥 Max 10</span><span>🌅 Morning</span>
+          </div>
+          <button class="ex-detail-btn" data-id="whaleshark">View Details</button>
+        </div>
+      </div>
+
+      <div class="ex-card" data-cat="wildlife" data-reveal>
+        <div class="ex-img-wrap">
+          <div class="ex-img" style="background-image:url('https://images.unsplash.com/photo-1607153333879-c174d265f1d2?w=600&q=80')"></div>
+          <div class="ex-tag">Wildlife</div>
+        </div>
+        <div class="ex-body">
+          <h3>Dolphin Watching</h3>
+          <p>Chase pods of spinner dolphins as they leap and play in the warm turquoise waters of Vaavu Atoll.</p>
+          <div class="ex-meta">
+            <span>⏱ 1.5–2 hours</span><span>👥 Max 12</span><span>🌅 Sunrise/Sunset</span>
+          </div>
+          <button class="ex-detail-btn" data-id="dolphin">View Details</button>
+        </div>
+      </div>
+
+      <div class="ex-card" data-cat="wildlife" data-reveal>
+        <div class="ex-img-wrap">
+          <div class="ex-img" style="background-image:url('https://images.unsplash.com/photo-1583212292454-1fe6229603b7?w=600&q=80')"></div>
+          <div class="ex-tag">Wildlife</div>
+        </div>
+        <div class="ex-body">
+          <h3>Manta Ray Snorkel</h3>
+          <p>Glide with graceful manta rays at famous cleaning stations in the heart of Vaavu Atoll.</p>
+          <div class="ex-meta">
+            <span>⏱ 2–3 hours</span><span>👥 Max 10</span><span>🌊 Seasonal</span>
+          </div>
+          <button class="ex-detail-btn" data-id="manta">View Details</button>
+        </div>
+      </div>
+
+      <div class="ex-card" data-cat="water" data-reveal>
+        <div class="ex-img-wrap">
+          <div class="ex-img" style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80')"></div>
+          <div class="ex-tag">Water</div>
+        </div>
+        <div class="ex-body">
+          <h3>Reef Snorkeling</h3>
+          <p>Explore vibrant coral gardens teeming with colourful reef fish, turtles, and moray eels.</p>
+          <div class="ex-meta">
+            <span>⏱ 2–3 hours</span><span>👥 Max 15</span><span>🐠 All levels</span>
+          </div>
+          <button class="ex-detail-btn" data-id="snorkel">View Details</button>
+        </div>
+      </div>
+
+      <div class="ex-card" data-cat="scenic" data-reveal>
+        <div class="ex-img-wrap">
+          <div class="ex-img" style="background-image:url('https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=600&q=80')"></div>
+          <div class="ex-tag">Scenic</div>
+        </div>
+        <div class="ex-body">
+          <h3>Sandbank Picnic</h3>
+          <p>Step onto a deserted white-sand bank in the middle of the ocean — your own private paradise.</p>
+          <div class="ex-meta">
+            <span>⏱ Half day</span><span>👥 Max 12</span><span>🏝️ Private</span>
+          </div>
+          <button class="ex-detail-btn" data-id="sandbank">View Details</button>
+        </div>
+      </div>
+
+      <div class="ex-card" data-cat="scenic" data-reveal>
+        <div class="ex-img-wrap">
+          <div class="ex-img" style="background-image:url('https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=600&q=80')"></div>
+          <div class="ex-tag">Scenic</div>
+        </div>
+        <div class="ex-body">
+          <h3>Sunset Cruise</h3>
+          <p>Drift across a golden sea as the sun melts into the horizon aboard the beautiful Jasmine.</p>
+          <div class="ex-meta">
+            <span>⏱ 1.5 hours</span><span>👥 Max 15</span><span>🌇 Evening</span>
+          </div>
+          <button class="ex-detail-btn" data-id="sunset">View Details</button>
+        </div>
+      </div>
+
+      <div class="ex-card" data-cat="water" data-reveal>
+        <div class="ex-img-wrap">
+          <div class="ex-img" style="background-image:url('https://images.unsplash.com/photo-1580019542155-247062e19ce4?w=600&q=80')"></div>
+          <div class="ex-tag">Water</div>
+        </div>
+        <div class="ex-body">
+          <h3>Night Fishing</h3>
+          <p>Try traditional Maldivian handline fishing under a canopy of stars — catch and cook on the island.</p>
+          <div class="ex-meta">
+            <span>⏱ 2–3 hours</span><span>👥 Max 10</span><span>🌙 Night</span>
+          </div>
+          <button class="ex-detail-btn" data-id="fishing">View Details</button>
+        </div>
+      </div>
+
+      <div class="ex-card" data-cat="scenic" data-reveal>
+        <div class="ex-img-wrap">
+          <div class="ex-img" style="background-image:url('https://images.unsplash.com/photo-1589979481223-deb893043163?w=600&q=80')"></div>
+          <div class="ex-tag">Scenic</div>
+        </div>
+        <div class="ex-body">
+          <h3>Island Hopping</h3>
+          <p>Visit local islands, uninhabited nature reserves, and hidden gems only the locals know about.</p>
+          <div class="ex-meta">
+            <span>⏱ Full day</span><span>👥 Max 12</span><span>🗺️ Explorer</span>
+          </div>
+          <button class="ex-detail-btn" data-id="islandhop">View Details</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ DETAIL MODAL ═══════════════════════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose">&#10005;</button>
+    <div class="modal-img-wrap">
+      <div class="modal-img" id="modalImg"></div>
+      <div class="modal-tag" id="modalTag"></div>
+    </div>
+    <div class="modal-body">
+      <h2 id="modalTitle"></h2>
+      <p id="modalDesc"></p>
+      <div class="modal-meta" id="modalMeta"></div>
+      <div class="modal-includes">
+        <h4>What's Included</h4>
+        <ul id="modalIncludes"></ul>
+      </div>
+      <div class="modal-note" id="modalNote"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════ EXPERIENCE STRIP ═══════════════════════ -->
+<section id="experience">
+  <div class="exp-strip">
+    <div class="exp-item" data-reveal>
+      <div class="exp-icon">🐋</div>
+      <h4>World-Class Marine Life</h4>
+      <p>Vaavu Atoll is renowned globally for its whale sharks, mantas, and pristine reefs.</p>
+    </div>
+    <div class="exp-divider"></div>
+    <div class="exp-item" data-reveal>
+      <div class="exp-icon">🛥️</div>
+      <h4>The Jasmine Experience</h4>
+      <p>Our comfortable, well-equipped vessel makes every journey as enjoyable as the destination.</p>
+    </div>
+    <div class="exp-divider"></div>
+    <div class="exp-item" data-reveal>
+      <div class="exp-icon">🧭</div>
+      <h4>Local Expert Guides</h4>
+      <p>Born and raised on Fulidhoo, our guides know every reef, current, and secret spot.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ GALLERY ═══════════════════════ -->
+<section id="gallery">
+  <div class="container">
+    <div class="section-header" data-reveal>
+      <span class="section-label">In the Water</span>
+      <h2>The <span class="gradient-text">Ocean Gallery</span></h2>
+    </div>
+    <div class="gallery-masonry" id="galleryGrid">
+      <div class="gal-item tall" data-reveal>
+        <div class="gal-img" style="background-image:url('https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80')"></div>
+        <div class="gal-label">Fulidhoo Reef</div>
+      </div>
+      <div class="gal-item" data-reveal>
+        <div class="gal-img" style="background-image:url('https://images.unsplash.com/photo-1607153333879-c174d265f1d2?w=600&q=80')"></div>
+        <div class="gal-label">Dolphin Play</div>
+      </div>
+      <div class="gal-item" data-reveal>
+        <div class="gal-img" style="background-image:url('https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=600&q=80')"></div>
+        <div class="gal-label">Sandbank Bliss</div>
+      </div>
+      <div class="gal-item tall" data-reveal>
+        <div class="gal-img" style="background-image:url('https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=600&q=80')"></div>
+        <div class="gal-label">Ocean Sunset</div>
+      </div>
+      <div class="gal-item wide" data-reveal>
+        <div class="gal-img" style="background-image:url('https://images.unsplash.com/photo-1560275619-4cc5fa59d3ae?w=800&q=80')"></div>
+        <div class="gal-label">Whale Shark</div>
+      </div>
+      <div class="gal-item" data-reveal>
+        <div class="gal-img" style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80')"></div>
+        <div class="gal-label">Coral Garden</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ LOCATION ═══════════════════════ -->
+<section id="location">
+  <div class="container">
+    <div class="location-grid">
+      <div class="location-info" data-reveal>
+        <span class="section-label">Find Us</span>
+        <h2>We're at <span class="gradient-text">Fulidhoo</span></h2>
+        <p>Island Break Guest House, V. Fulidhoo, Vaavu Atoll, Republic of Maldives.</p>
+
+        <div class="contact-cards">
+          <div class="contact-card">
+            <span class="cc-icon">📍</span>
+            <div>
+              <strong>Address</strong>
+              <p>V. Fulidhoo, Vaavu Atoll, Maldives</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <span class="cc-icon">📞</span>
+            <div>
+              <strong>Phone / WhatsApp</strong>
+              <p>+960 XXX XXXX</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <span class="cc-icon">✉️</span>
+            <div>
+              <strong>Email</strong>
+              <p>info@discovervaavu.mv</p>
+            </div>
+          </div>
+          <div class="contact-card">
+            <span class="cc-icon">🕐</span>
+            <div>
+              <strong>Operating Hours</strong>
+              <p>Daily · Sunrise to Sunset</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="social-row">
+          <a href="#" class="social-btn">📘 Facebook</a>
+          <a href="#" class="social-btn">📸 Instagram</a>
+        </div>
+      </div>
+
+      <div class="map-wrap" data-reveal>
+        <div class="map-frame">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15893.7!2d73.4304!3d3.7833!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b3fb2ce5e5e5e5e%3A0x5e5e5e5e5e5e5e5e!2sFulidhoo%2C%20Maldives!5e0!3m2!1sen!2smv!4v1680000000000!5m2!1sen!2smv"
+            width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade" title="Fulidhoo Map">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
+<footer id="footer">
+  <div class="footer-wave">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#0a1628"/>
+    </svg>
+  </div>
+  <div class="footer-inner">
+    <div class="footer-logo">
+      <span class="footer-logo-text">Discover Vaavu</span>
+      <p>Islandbreak Excursion<br/>V. Fulidhoo &middot; Vaavu Atoll &middot; Maldives</p>
+    </div>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#excursions">Excursions</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#location">Find Us</a>
+    </div>
+    <p class="footer-copy">&copy; 2025 Discover Vaavu. All rights reserved. &middot; Part of Island Break Guest House</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
