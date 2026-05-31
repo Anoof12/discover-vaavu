@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin – Discover Vaavu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/admin.css" />
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     LOGIN SCREEN
+════════════════════════════════════ -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <span>Discover Vaavu</span>
+      <small>Admin Panel</small>
+    </div>
+    <div class="login-ocean"></div>
+    <form id="loginForm">
+      <label>Password</label>
+      <div class="input-wrap">
+        <input type="password" id="loginPass" placeholder="Enter admin password" required />
+        <button type="button" id="togglePass">👁</button>
+      </div>
+      <p class="login-error" id="loginError"></p>
+      <button type="submit" class="btn-login">Sign In</button>
+    </form>
+    <a href="../" class="back-link">← Back to website</a>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     ADMIN SHELL
+════════════════════════════════════ -->
+<div id="adminShell" class="admin-shell hidden">
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span class="sidebar-brand">Discover Vaavu</span>
+      <small>Admin</small>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard">
+        <span class="nav-icon">🏠</span><span>Dashboard</span>
+      </a>
+      <a href="#" class="nav-item" data-section="hero">
+        <span class="nav-icon">🌅</span><span>Hero Section</span>
+      </a>
+      <a href="#" class="nav-item" data-section="stats">
+        <span class="nav-icon">📊</span><span>Stats</span>
+      </a>
+      <a href="#" class="nav-item" data-section="about">
+        <span class="nav-icon">📖</span><span>About</span>
+      </a>
+      <a href="#" class="nav-item" data-section="excursions">
+        <span class="nav-icon">🛥️</span><span>Excursions</span>
+      </a>
+      <a href="#" class="nav-item" data-section="contact">
+        <span class="nav-icon">📞</span><span>Contact Info</span>
+      </a>
+      <a href="#" class="nav-item" data-section="settings">
+        <span class="nav-icon">⚙️</span><span>Settings</span>
+      </a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="../" target="_blank" class="view-site-btn">🌐 View Live Site</a>
+      <button id="logoutBtn" class="logout-btn">Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+    <h1 class="topbar-title" id="topbarTitle">Dashboard</h1>
+    <div class="topbar-actions">
+      <div class="publish-status" id="publishStatus"></div>
+      <button class="btn-publish" id="publishBtn">🚀 Publish Changes</button>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <main class="admin-main" id="adminMain">
+
+    <!-- ── Dashboard ── -->
+    <section class="admin-section" id="sec-dashboard">
+      <div class="dash-welcome">
+        <h2>Welcome back! 👋</h2>
+        <p>Manage your Discover Vaavu excursion website from here. Select a section on the left to start editing.</p>
+      </div>
+      <div class="dash-cards">
+        <div class="dash-card" data-section="excursions">
+          <span class="dash-icon">🛥️</span>
+          <h3 id="dashExCount">–</h3>
+          <p>Active Excursions</p>
+        </div>
+        <div class="dash-card" data-section="contact">
+          <span class="dash-icon">📞</span>
+          <h3>Contact</h3>
+          <p>Update Info</p>
+        </div>
+        <div class="dash-card" data-section="hero">
+          <span class="dash-icon">🌅</span>
+          <h3>Hero</h3>
+          <p>Edit Headlines</p>
+        </div>
+        <div class="dash-card" data-section="stats">
+          <span class="dash-icon">📊</span>
+          <h3>Stats</h3>
+          <p>Update Numbers</p>
+        </div>
+      </div>
+      <div class="dash-info">
+        <div class="info-box">
+          <h4>💡 How publishing works</h4>
+          <p>When you click <strong>Publish Changes</strong>, your edits are saved directly to GitHub via the API. GitHub Pages automatically rebuilds the live site within ~1 minute.</p>
+        </div>
+        <div class="info-box token-box" id="tokenInfoBox">
+          <h4>🔑 GitHub Token Required</h4>
+          <p>You need a GitHub Personal Access Token with <code>repo</code> scope to publish. <a href="#" id="goToSettings">Set it up in Settings →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Hero ── -->
+    <section class="admin-section hidden" id="sec-hero">
+      <div class="section-head"><h2>Hero Section</h2><p>The first thing visitors see.</p></div>
+      <div class="form-card">
+        <div class="form-group">
+          <label>Tagline <small>(small text above title)</small></label>
+          <input type="text" id="heroTagline" placeholder="e.g. Welcome to" />
+        </div>
+        <div class="form-group">
+          <label>Main Title</label>
+          <input type="text" id="heroTitleInput" placeholder="e.g. Discover Vaavu" />
+        </div>
+        <div class="form-group">
+          <label>Subtitle</label>
+          <input type="text" id="heroSubtitle" placeholder="e.g. Islandbreak Excursion · V. Fulidhoo, Maldives" />
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea id="heroDesc" rows="3" placeholder="Short description shown in the hero..."></textarea>
+        </div>
+        <button class="btn-save" data-target="hero">Save Hero</button>
+      </div>
+    </section>
+
+    <!-- ── Stats ── -->
+    <section class="admin-section hidden" id="sec-stats">
+      <div class="section-head"><h2>Stats</h2><p>The animated numbers on the dark banner.</p></div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Happy Guests</label>
+            <input type="number" id="statGuests" min="0" />
+          </div>
+          <div class="form-group">
+            <label>Excursion Types</label>
+            <input type="number" id="statExcursions" min="0" />
+          </div>
+          <div class="form-group">
+            <label>Satisfaction (%)</label>
+            <input type="number" id="statSatisfaction" min="0" max="100" />
+          </div>
+          <div class="form-group">
+            <label>Years Experience</label>
+            <input type="number" id="statExperience" min="0" />
+          </div>
+        </div>
+        <button class="btn-save" data-target="stats">Save Stats</button>
+      </div>
+    </section>
+
+    <!-- ── About ── -->
+    <section class="admin-section hidden" id="sec-about">
+      <div class="section-head"><h2>About</h2><p>The text in the "Our Story" section.</p></div>
+      <div class="form-card">
+        <div class="form-group">
+          <label>First Paragraph</label>
+          <textarea id="aboutBody1" rows="4"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Second Paragraph</label>
+          <textarea id="aboutBody2" rows="4"></textarea>
+        </div>
+        <button class="btn-save" data-target="about">Save About</button>
+      </div>
+    </section>
+
+    <!-- ── Excursions ── -->
+    <section class="admin-section hidden" id="sec-excursions">
+      <div class="section-head">
+        <div>
+          <h2>Excursions</h2>
+          <p>Add, edit, reorder, or hide excursion cards.</p>
+        </div>
+        <button class="btn-add-ex" id="addExcursionBtn">+ Add Excursion</button>
+      </div>
+      <div class="excursion-list" id="excursionList">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ── Contact ── -->
+    <section class="admin-section hidden" id="sec-contact">
+      <div class="section-head"><h2>Contact Info</h2><p>Shown in the "Find Us" section.</p></div>
+      <div class="form-card">
+        <div class="form-row">
+          <div class="form-group">
+            <label>📍 Address</label>
+            <input type="text" id="contactAddress" />
+          </div>
+          <div class="form-group">
+            <label>📞 Phone / WhatsApp</label>
+            <input type="text" id="contactPhone" placeholder="+960 XXX XXXX" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>✉️ Email</label>
+            <input type="email" id="contactEmail" />
+          </div>
+          <div class="form-group">
+            <label>🕐 Operating Hours</label>
+            <input type="text" id="contactHours" placeholder="Daily · Sunrise to Sunset" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>📘 Facebook URL</label>
+            <input type="url" id="contactFacebook" placeholder="https://facebook.com/..." />
+          </div>
+          <div class="form-group">
+            <label>📸 Instagram URL</label>
+            <input type="url" id="contactInstagram" placeholder="https://instagram.com/..." />
+          </div>
+        </div>
+        <button class="btn-save" data-target="contact">Save Contact</button>
+      </div>
+    </section>
+
+    <!-- ── Settings ── -->
+    <section class="admin-section hidden" id="sec-settings">
+      <div class="section-head"><h2>Settings</h2><p>Admin credentials and GitHub integration.</p></div>
+
+      <div class="form-card">
+        <h3 class="card-heading">🔑 GitHub Token</h3>
+        <p class="card-desc">Required to publish changes to the live site. Create a token at <strong>GitHub → Settings → Developer Settings → Personal Access Tokens (classic)</strong> with <code>repo</code> scope.</p>
+        <div class="form-group">
+          <label>Personal Access Token</label>
+          <div class="input-wrap">
+            <input type="password" id="githubToken" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" />
+            <button type="button" id="toggleToken">👁</button>
+          </div>
+          <small>Stored locally in your browser only — never sent anywhere except GitHub's API.</small>
+        </div>
+        <button class="btn-save" id="saveTokenBtn">Save Token</button>
+      </div>
+
+      <div class="form-card">
+        <h3 class="card-heading">🔒 Change Password</h3>
+        <p class="card-desc">Default password is <strong>IslandBreak2025</strong>. Change it here.</p>
+        <div class="form-group">
+          <label>Current Password</label>
+          <input type="password" id="currentPass" />
+        </div>
+        <div class="form-group">
+          <label>New Password</label>
+          <input type="password" id="newPass" placeholder="Min. 8 characters" />
+        </div>
+        <div class="form-group">
+          <label>Confirm New Password</label>
+          <input type="password" id="confirmPass" />
+        </div>
+        <p class="pass-msg" id="passMsg"></p>
+        <button class="btn-save" id="changePassBtn">Update Password</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ════════════════════════════════════
+     EXCURSION EDITOR DRAWER
+════════════════════════════════════ -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="excursionDrawer">
+  <div class="drawer-head">
+    <h3 id="drawerTitle">Add Excursion</h3>
+    <button class="drawer-close" id="drawerClose">✕</button>
+  </div>
+  <div class="drawer-body">
+    <input type="hidden" id="exId" />
+    <div class="form-row">
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" id="exTitle" placeholder="e.g. Whale Shark Encounter" />
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select id="exCategory">
+          <option value="wildlife">Wildlife</option>
+          <option value="water">Water Activities</option>
+          <option value="scenic">Scenic</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Tag Label <small>(shown on card)</small></label>
+      <input type="text" id="exTagLabel" placeholder="e.g. Wildlife" />
+    </div>
+    <div class="form-group">
+      <label>Image URL</label>
+      <input type="url" id="exImage" placeholder="https://..." />
+      <div class="img-preview" id="exImgPreview"></div>
+    </div>
+    <div class="form-group">
+      <label>Short Description <small>(card preview)</small></label>
+      <textarea id="exShortDesc" rows="2"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Full Description <small>(shown in modal)</small></label>
+      <textarea id="exFullDesc" rows="4"></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Duration</label>
+        <input type="text" id="exDuration" placeholder="e.g. 3–4 hours" />
+      </div>
+      <div class="form-group">
+        <label>Group Size</label>
+        <input type="text" id="exGroupSize" placeholder="e.g. Max 10" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Timing</label>
+        <input type="text" id="exTiming" placeholder="e.g. Morning" />
+      </div>
+      <div class="form-group">
+        <label>Extra Meta</label>
+        <input type="text" id="exExtraMeta" placeholder="e.g. Snorkel included" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>What's Included <small>(one item per line)</small></label>
+      <textarea id="exIncludes" rows="5" placeholder="Snorkel mask & fins&#10;Life jacket&#10;..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Note <small>(shown at bottom of modal)</small></label>
+      <textarea id="exNote" rows="2" placeholder="e.g. 🌿 Best from October to April..."></textarea>
+    </div>
+    <div class="form-group toggle-group">
+      <label class="toggle-label">
+        <span>Active <small>(visible on site)</small></span>
+        <div class="toggle-switch">
+          <input type="checkbox" id="exActive" checked />
+          <span class="toggle-slider"></span>
+        </div>
+      </label>
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn-cancel" id="drawerCancel">Cancel</button>
+    <button class="btn-save-drawer" id="drawerSave">Save Excursion</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     TOAST
+════════════════════════════════════ -->
+<div class="toast" id="toast"></div>
+
+<script src="js/admin.js"></script>
+</body>
+</html>
