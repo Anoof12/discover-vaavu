@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   initPublish();
   initSettings();
   initTokenBanner();
+  initStaticUploaders();
 });
 
 /* ══════════════════════════════════════════
@@ -130,6 +131,89 @@ function adminImg(path) {
   if (!path) return '';
   if (path.startsWith('assets/')) return '../' + path;
   return path;
+}
+
+/* ══════════════════════════════════════════
+   IMAGE UPLOAD TO GITHUB
+══════════════════════════════════════════ */
+async function uploadImageToGitHub(file, repoPath, statusEl, thumbEl) {
+  const token = getToken();
+  if (!token) throw new Error('No GitHub token — add one in Settings first');
+
+  // Show uploading state
+  if (statusEl) { statusEl.className = 'upload-status uploading'; statusEl.textContent = `⟳ Uploading ${file.name}…`; }
+  if (thumbEl)  thumbEl.style.backgroundImage = '';
+
+  // Read file → base64
+  const base64 = await new Promise((res, rej) => {
+    const reader = new FileReader();
+    reader.onload  = () => res(reader.result.split(',')[1]);
+    reader.onerror = rej;
+    reader.readAsDataURL(file);
+  });
+
+  // Get existing SHA if file already exists
+  let sha;
+  try {
+    const check = await fetch(`${API}/repos/${REPO}/contents/${repoPath}`, { headers: ghHeaders() });
+    if (check.ok) sha = (await check.json()).sha;
+  } catch { /* new file */ }
+
+  // Upload via GitHub Contents API
+  const body = { message: `Upload image: ${repoPath}`, content: base64 };
+  if (sha) body.sha = sha;
+
+  const r = await fetch(`${API}/repos/${REPO}/contents/${repoPath}`, {
+    method:  'PUT',
+    headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+    body:    JSON.stringify(body)
+  });
+
+  if (!r.ok) {
+    const e = await r.json().catch(() => ({}));
+    throw new Error(e.message || `HTTP ${r.status}`);
+  }
+
+  // Show success + local preview
+  const localUrl = URL.createObjectURL(file);
+  if (thumbEl)  thumbEl.style.backgroundImage = `url('${localUrl}')`;
+  if (statusEl) { statusEl.className = 'upload-status done'; statusEl.textContent = `✓ Uploaded: ${file.name}`; }
+
+  return repoPath;
+}
+
+/* Helper: wire a file-pick button to an upload flow */
+function initImageUploader({ pickBtnId, fileInputId, statusId, thumbId, onSuccess, repoPathFn }) {
+  const pickBtn   = document.getElementById(pickBtnId);
+  const fileInput = document.getElementById(fileInputId);
+  if (!pickBtn || !fileInput) return;
+
+  pickBtn.addEventListener('click', () => fileInput.click());
+
+  fileInput.addEventListener('change', async () => {
+    const file = fileInput.files[0];
+    if (!file) return;
+    if (file.size > 8 * 1024 * 1024) { toast('Image too large — max 8MB', 'err'); return; }
+
+    const statusEl = document.getElementById(statusId);
+    const thumbEl  = document.getElementById(thumbId);
+
+    pickBtn.disabled = true;
+    try {
+      const ext      = file.name.split('.').pop().toLowerCase();
+      const repoPath = repoPathFn(ext);
+      const path     = await uploadImageToGitHub(file, repoPath, statusEl, thumbEl);
+      toast('✓ Photo uploaded! Click Publish to go live.', 'ok');
+      if (onSuccess) onSuccess(path);
+    } catch (e) {
+      console.error(e);
+      if (statusEl) { statusEl.className = 'upload-status error'; statusEl.textContent = `✗ ${e.message}`; }
+      toast(`✗ Upload failed: ${e.message}`, 'err');
+    } finally {
+      pickBtn.disabled = false;
+      fileInput.value  = '';
+    }
+  });
 }
 
 /* ══════════════════════════════════════════
@@ -235,6 +319,64 @@ function renderExcursionList() {
   );
 }
 
+/* ══════════════════════════════════════════
+   STATIC PAGE UPLOADERS (Hero, About)
+══════════════════════════════════════════ */
+function initStaticUploaders() {
+  // Hero background
+  initImageUploader({
+    pickBtnId:   'heroPickBtn',
+    fileInputId: 'heroImageFile',
+    statusId:    'heroUploadStatus',
+    thumbId:     'heroImgPreview',
+    repoPathFn:  (ext) => `assets/hero-bg.${ext}`,
+    onSuccess:   (path) => {
+      // Update CSS on live site via style.css — just inform user to publish
+      // The CSS already references assets/hero-bg.jpg; uploading hero-bg.{ext}
+      // with same ext keeps it working. Notify if ext changed.
+      toast('✓ Hero photo uploaded! Publish to go live.', 'ok');
+    }
+  });
+
+  // About photo
+  initImageUploader({
+    pickBtnId:   'aboutPickBtn',
+    fileInputId: 'aboutImageFile',
+    statusId:    'aboutUploadStatus',
+    thumbId:     'aboutImgPreview',
+    repoPathFn:  (ext) => `assets/about-img.${ext}`,
+    onSuccess:   async (path) => {
+      // Update index.html to point to new about image
+      await updateAboutImageInHTML(path);
+      toast('✓ About photo uploaded & linked! Publish to go live.', 'ok');
+    }
+  });
+}
+
+async function updateAboutImageInHTML(newPath) {
+  try {
+    const token = getToken();
+    if (!token) return;
+    // Fetch index.html from GitHub, replace about-img src, commit back
+    const r = await fetch(`${API}/repos/${REPO}/contents/index.html`, { headers: ghHeaders() });
+    if (!r.ok) return;
+    const j   = await r.json();
+    const html = atob(j.content.replace(/\n/g, ''));
+    const updated = html.replace(
+      /(<img[^>]*class="about-img"[^>]*src=")[^"]*(")/,
+      `$1${newPath}$2`
+    );
+    const bytes = new TextEncoder().encode(updated);
+    let   bin   = '';
+    bytes.forEach(b => bin += String.fromCharCode(b));
+    await fetch(`${API}/repos/${REPO}/contents/index.html`, {
+      method:  'PUT',
+      headers: { ...ghHeaders(), 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ message: 'Update about image', content: btoa(bin), sha: j.sha })
+    });
+  } catch (e) { console.warn('Could not update about image path:', e); }
+}
+
 /* ── Drawer ── */
 let editingIdx = null;
 
@@ -243,9 +385,21 @@ document.getElementById('drawerClose').addEventListener('click',    closeDrawer)
 document.getElementById('drawerCancel').addEventListener('click',   closeDrawer);
 document.getElementById('drawerOverlay').addEventListener('click',  closeDrawer);
 
-document.getElementById('exImage').addEventListener('input', function () {
-  document.getElementById('exImgPreview').style.backgroundImage =
-    this.value ? `url('${adminImg(this.value)}')` : '';
+/* Excursion image uploader inside drawer */
+initImageUploader({
+  pickBtnId:   'exPickBtn',
+  fileInputId: 'exImageFile',
+  statusId:    'exUploadStatus',
+  thumbId:     'exImgPreview',
+  repoPathFn:  (ext) => {
+    const id = document.getElementById('exId').value.trim()
+              || slugify(document.getElementById('exTitle').value.trim())
+              || 'excursion';
+    return `assets/ex-${id}.${ext}`;
+  },
+  onSuccess: (path) => {
+    document.getElementById('exImage').value = path;
+  }
 });
 
 function openDrawer(idx) {
@@ -269,14 +423,27 @@ function openDrawer(idx) {
     setVal('exIncludes',  (ex.includes || []).join('\n'));
     setVal('exNote',      ex.note);
     document.getElementById('exActive').checked = ex.active !== false;
-    document.getElementById('exImgPreview').style.backgroundImage =
-      ex.image ? `url('${adminImg(ex.image)}')` : '';
+    // Show current image in thumb
+    const thumb  = document.getElementById('exImgPreview');
+    const status = document.getElementById('exUploadStatus');
+    if (ex.image) {
+      thumb.style.backgroundImage = `url('${adminImg(ex.image)}')`;
+      status.className = 'upload-status done';
+      status.textContent = `Current: ${ex.image.split('/').pop()}`;
+    } else {
+      thumb.style.backgroundImage = '';
+      status.className = 'upload-status';
+      status.textContent = 'No image — upload one below';
+    }
   } else {
     ['exId','exTitle','exTagLabel','exImage','exPrice','exShortDesc',
      'exFullDesc','exDuration','exGroupSize','exTiming','exExtraMeta','exIncludes','exNote']
       .forEach(id => setVal(id, ''));
     document.getElementById('exActive').checked = true;
     document.getElementById('exImgPreview').style.backgroundImage = '';
+    const status = document.getElementById('exUploadStatus');
+    status.className = 'upload-status';
+    status.textContent = 'No image selected';
   }
 
   document.getElementById('drawerOverlay').classList.add('open');

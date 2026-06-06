@@ -129,7 +129,24 @@
     <!-- ── Hero ── -->
     <section class="admin-section hidden" id="sec-hero">
       <div class="section-head"><h2>Hero Section</h2><p>The first thing visitors see.</p></div>
+
       <div class="form-card">
+        <h3 class="card-heading">🖼️ Background Photo</h3>
+        <p class="card-desc">This full-screen image appears behind the main title on the homepage.</p>
+        <div class="upload-zone">
+          <div class="upload-thumb" id="heroImgPreview" style="background-image:url('../assets/hero-bg.jpg')"></div>
+          <div class="upload-info">
+            <span class="upload-status" id="heroUploadStatus">Current: hero-bg.jpg</span>
+            <div class="upload-btns">
+              <button type="button" class="btn-upload" id="heroPickBtn">📁 Choose Photo</button>
+            </div>
+          </div>
+        </div>
+        <input type="file" id="heroImageFile" accept="image/*" hidden />
+      </div>
+
+      <div class="form-card">
+        <h3 class="card-heading">✍️ Text Content</h3>
         <div class="form-group">
           <label>Tagline <small>(small text above title)</small></label>
           <input type="text" id="heroTagline" placeholder="e.g. Welcome to" />
@@ -178,8 +195,25 @@
 
     <!-- ── About ── -->
     <section class="admin-section hidden" id="sec-about">
-      <div class="section-head"><h2>About</h2><p>The text in the "Our Story" section.</p></div>
+      <div class="section-head"><h2>About</h2><p>The "Our Story" section.</p></div>
+
       <div class="form-card">
+        <h3 class="card-heading">🖼️ About Photo</h3>
+        <p class="card-desc">The photo shown beside the "Our Story" text.</p>
+        <div class="upload-zone">
+          <div class="upload-thumb" id="aboutImgPreview" style="background-image:url('../assets/fulidhoo-hero.jpg')"></div>
+          <div class="upload-info">
+            <span class="upload-status" id="aboutUploadStatus">Current: fulidhoo-hero.jpg</span>
+            <div class="upload-btns">
+              <button type="button" class="btn-upload" id="aboutPickBtn">📁 Choose Photo</button>
+            </div>
+          </div>
+        </div>
+        <input type="file" id="aboutImageFile" accept="image/*" hidden />
+      </div>
+
+      <div class="form-card">
+        <h3 class="card-heading">✍️ Text Content</h3>
         <div class="form-group">
           <label>First Paragraph</label>
           <textarea id="aboutBody1" rows="4"></textarea>
@@ -325,9 +359,18 @@
       </div>
     </div>
     <div class="form-group">
-      <label>Image URL or path</label>
-      <input type="url" id="exImage" placeholder="https://..." />
-      <div class="img-preview" id="exImgPreview"></div>
+      <label>Excursion Photo</label>
+      <div class="upload-zone" id="exUploadZone">
+        <div class="upload-thumb" id="exImgPreview"></div>
+        <div class="upload-info">
+          <span class="upload-status" id="exUploadStatus">No image selected</span>
+          <div class="upload-btns">
+            <button type="button" class="btn-upload" id="exPickBtn">📁 Choose Photo</button>
+          </div>
+        </div>
+      </div>
+      <input type="file"   id="exImageFile" accept="image/*" hidden />
+      <input type="hidden" id="exImage" />
     </div>
     <div class="form-group">
       <label>Short Description <small>(card preview)</small></label>
