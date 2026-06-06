@@ -498,6 +498,18 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   border-radius: 50px;
   backdrop-filter: blur(6px);
 }
+.ex-price {
+  position: absolute;
+  bottom: 14px; right: 14px;
+  background: rgba(10,22,40,0.85);
+  color: var(--teal-lt);
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 50px;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(14,154,167,0.4);
+}
 
 .ex-body { padding: 24px; }
 .ex-body h3 {

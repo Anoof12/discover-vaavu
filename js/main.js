@@ -127,6 +127,7 @@ function renderExcursions(excursions) {
       <div class="ex-img-wrap">
         <div class="ex-img" style="background-image:url('${ex.image}')"></div>
         <div class="ex-tag">${ex.tagLabel}</div>
+        ${ex.price ? `<div class="ex-price">${ex.price}</div>` : ''}
       </div>
       <div class="ex-body">
         <h3>${ex.title}</h3>
