@@ -259,7 +259,11 @@
           </div>
           <small>Stored locally in your browser only — never sent anywhere except GitHub's API.</small>
         </div>
-        <button class="btn-save" id="saveTokenBtn">Save Token</button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn-save" id="saveTokenBtn">Save Token</button>
+          <button class="btn-save" id="testTokenBtn" style="background:var(--surface2);color:var(--text);">Test Connection</button>
+        </div>
+        <p class="pass-msg" id="tokenMsg"></p>
       </div>
 
       <div class="form-card">

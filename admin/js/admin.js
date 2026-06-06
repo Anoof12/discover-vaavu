@@ -129,7 +129,7 @@ async function loadContentFallback() {
     siteData = defaultContent();
     setStatus('', 'Using defaults');
   }
-  populateForms();
+  /* populateForms() intentionally omitted — loadContentData() always calls it */
 }
 
 /* ══════════════════════════════════════════
@@ -377,7 +377,12 @@ async function publish() {
       fileSHA = checkJson.sha;
     }
 
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(siteData, null, 2))));
+    /* Encode JSON to base64 safely — handles Unicode without deprecated unescape() */
+    const jsonStr = JSON.stringify(siteData, null, 2);
+    const bytes   = new TextEncoder().encode(jsonStr);
+    let   binary  = '';
+    bytes.forEach(b => binary += String.fromCharCode(b));
+    const content = btoa(binary);
     const body    = { message: 'Update site content via admin panel', content };
     if (fileSHA) body.sha = fileSHA;
 
@@ -387,8 +392,10 @@ async function publish() {
       body:    JSON.stringify(body)
     });
     if (!r.ok) {
-      const err = await r.json();
-      throw new Error(err.message || 'GitHub API error');
+      const errJson = await r.json().catch(() => ({}));
+      const errMsg  = errJson.message || `HTTP ${r.status}`;
+      console.error('GitHub API error:', errJson);
+      throw new Error(errMsg);
     }
     const j = await r.json();
     fileSHA = j.content.sha;
@@ -396,8 +403,9 @@ async function publish() {
     setStatus('success', '✓ Published!');
     toast('🚀 Published! Site rebuilds in ~1 minute.', 'ok');
   } catch (e) {
+    console.error('Publish error:', e);
     setStatus('error', '✗ Failed');
-    toast(`✗ Publish failed: ${e.message}`, 'err');
+    toast(`✗ ${e.message}`, 'err');
   } finally {
     btn.disabled = false;
   }
@@ -420,6 +428,27 @@ function initSettings() {
     toast('✓ Token saved', 'ok');
     initTokenInfo();
     loadContentData();
+  });
+
+  document.getElementById('testTokenBtn').addEventListener('click', async () => {
+    const t   = document.getElementById('githubToken').value.trim();
+    const msg = document.getElementById('tokenMsg');
+    if (!t) { msg.className = 'pass-msg err'; msg.textContent = 'Enter a token first.'; return; }
+    msg.className = 'pass-msg'; msg.textContent = 'Testing…';
+    try {
+      const r = await fetch(`${API}/repos/${REPO}`, { headers: { 'Authorization': `Bearer ${t}`, 'Accept': 'application/vnd.github+json' } });
+      if (r.ok) {
+        const j = await r.json();
+        msg.className = 'pass-msg ok';
+        msg.textContent = `✓ Connected! Repo: ${j.full_name} (${j.private ? 'private' : 'public'})`;
+      } else {
+        const e = await r.json();
+        msg.className = 'pass-msg err';
+        msg.textContent = `✗ ${e.message || 'Invalid token or no access'}`;
+      }
+    } catch {
+      msg.className = 'pass-msg err'; msg.textContent = '✗ Network error — check your connection.';
+    }
   });
 
   /* Change password */
