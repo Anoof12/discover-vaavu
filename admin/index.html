@@ -146,7 +146,7 @@
           <label>Description</label>
           <textarea id="heroDesc" rows="3" placeholder="Short description shown in the hero..."></textarea>
         </div>
-        <button class="btn-save" data-target="hero">Save Hero</button>
+        <p style="font-size:0.82rem;color:var(--text-sm);margin-top:8px;">✏️ Edit and click <strong style="color:var(--teal-lt)">Publish Changes</strong> in the top bar to go live.</p>
       </div>
     </section>
 
@@ -172,7 +172,7 @@
             <input type="number" id="statExperience" min="0" />
           </div>
         </div>
-        <button class="btn-save" data-target="stats">Save Stats</button>
+        <p style="font-size:0.82rem;color:var(--text-sm);margin-top:8px;">✏️ Edit and click <strong style="color:var(--teal-lt)">Publish Changes</strong> in the top bar to go live.</p>
       </div>
     </section>
 
@@ -188,7 +188,7 @@
           <label>Second Paragraph</label>
           <textarea id="aboutBody2" rows="4"></textarea>
         </div>
-        <button class="btn-save" data-target="about">Save About</button>
+        <p style="font-size:0.82rem;color:var(--text-sm);margin-top:8px;">✏️ Edit and click <strong style="color:var(--teal-lt)">Publish Changes</strong> in the top bar to go live.</p>
       </div>
     </section>
 
@@ -240,7 +240,7 @@
             <input type="url" id="contactInstagram" placeholder="https://instagram.com/..." />
           </div>
         </div>
-        <button class="btn-save" data-target="contact">Save Contact</button>
+        <p style="font-size:0.82rem;color:var(--text-sm);margin-top:8px;">✏️ Edit and click <strong style="color:var(--teal-lt)">Publish Changes</strong> in the top bar to go live.</p>
       </div>
     </section>
 
@@ -314,12 +314,18 @@
         </select>
       </div>
     </div>
-    <div class="form-group">
-      <label>Tag Label <small>(shown on card)</small></label>
-      <input type="text" id="exTagLabel" placeholder="e.g. Wildlife" />
+    <div class="form-row">
+      <div class="form-group">
+        <label>Tag Label <small>(shown on card)</small></label>
+        <input type="text" id="exTagLabel" placeholder="e.g. Wildlife" />
+      </div>
+      <div class="form-group">
+        <label>Price <small>(shown on card)</small></label>
+        <input type="text" id="exPrice" placeholder="e.g. $45 per person" />
+      </div>
     </div>
     <div class="form-group">
-      <label>Image URL</label>
+      <label>Image URL or path</label>
       <input type="url" id="exImage" placeholder="https://..." />
       <div class="img-preview" id="exImgPreview"></div>
     </div>
