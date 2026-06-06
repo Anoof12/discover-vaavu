@@ -2,7 +2,7 @@
   "hero": {
     "tagline": "Welcome to",
     "title": "Discover Vaavu",
-    "subtitle": "Islandbreak Excursion Â· V. Fulidhoo, Maldives",
+    "subtitle": "Islandbreak Excursion · V. Fulidhoo, Maldives",
     "description": "Dive into the crystal-clear waters of Vaavu Atoll. Experience the magic of the Indian Ocean aboard our vessel Jasmine."
   },
   "stats": {
@@ -12,7 +12,7 @@
     "experience": 5
   },
   "about": {
-    "body1": "Discover Vaavu is the excursion arm of Island Break Guest House, nestled on the beautiful island of Fulidhoo in Vaavu Atoll. We bring you the finest ocean adventures the Maldives has to offer â from swimming with whale sharks to watching dolphins dance at sunset.",
+    "body1": "Discover Vaavu is the excursion arm of Island Break Guest House, nestled on the beautiful island of Fulidhoo in Vaavu Atoll. We bring you the finest ocean adventures the Maldives has to offer — from swimming with whale sharks to watching dolphins dance at sunset.",
     "body2": "Our boat Jasmine is your gateway to Vaavu's pristine reefs, hidden sandbars, and abundant marine life. Every trip is crafted to give you an authentic, unforgettable Maldivian experience."
   },
   "excursions": [
@@ -24,19 +24,12 @@
       "tagLabel": "Wildlife",
       "shortDesc": "Swim alongside the ocean's gentle giants in one of the world's best whale shark destinations.",
       "fullDesc": "Join us for a once-in-a-lifetime experience swimming alongside whale sharks in the warm waters of Vaavu Atoll. Fulidhoo is one of the Maldives' premier locations for these gentle giants, and our expert guides know exactly where to find them.",
-      "duration": "3â4 hours",
+      "duration": "3–4 hours",
       "groupSize": "Max 10",
       "timing": "Morning",
       "extraMeta": "Snorkel included",
-      "includes": [
-        "Snorkel mask & fins",
-        "Buoyancy vest",
-        "Towel & fresh water",
-        "Light refreshments",
-        "Expert marine guide",
-        "Safety briefing"
-      ],
-      "note": "ð¿ Seasonal availability: Best from October to April. We follow strict eco-friendly guidelines â no touching, no flash photography.",
+      "includes": ["Snorkel mask & fins", "Buoyancy vest", "Towel & fresh water", "Light refreshments", "Expert marine guide", "Safety briefing"],
+      "note": "🌿 Seasonal availability: Best from October to April. We follow strict eco-friendly guidelines — no touching, no flash photography.",
       "active": true
     },
     {
@@ -47,17 +40,12 @@
       "tagLabel": "Wildlife",
       "shortDesc": "Chase pods of spinner dolphins as they leap and play in the warm turquoise waters of Vaavu Atoll.",
       "fullDesc": "Spinner dolphins are abundant in Vaavu Atoll, and watching them leap and spin in our boat's wake is pure magic. We offer both sunrise and sunset departures for the most spectacular viewing light.",
-      "duration": "1.5â2 hours",
+      "duration": "1.5–2 hours",
       "groupSize": "Max 12",
       "timing": "Sunrise / Sunset",
       "extraMeta": "Boat trip",
-      "includes": [
-        "Dolphin-watching cruise",
-        "Expert local guide",
-        "Fresh water & light snacks",
-        "Photography tips"
-      ],
-      "note": "ð¸ Bring your camera! Spinner dolphins are extremely active and almost always put on a show.",
+      "includes": ["Dolphin-watching cruise", "Expert local guide", "Fresh water & light snacks", "Photography tips"],
+      "note": "📸 Bring your camera! Spinner dolphins are extremely active and almost always put on a show.",
       "active": true
     },
     {
@@ -68,18 +56,12 @@
       "tagLabel": "Wildlife",
       "shortDesc": "Glide with graceful manta rays at famous cleaning stations in the heart of Vaavu Atoll.",
       "fullDesc": "Vaavu Atoll is home to famous manta ray cleaning stations where you can glide alongside these majestic creatures. Our guides know the best times and spots for guaranteed encounters.",
-      "duration": "2â3 hours",
+      "duration": "2–3 hours",
       "groupSize": "Max 10",
       "timing": "Seasonal",
       "extraMeta": "All levels welcome",
-      "includes": [
-        "Snorkel gear",
-        "Life jacket",
-        "Marine biologist guide",
-        "Fresh water & towels",
-        "Light refreshments"
-      ],
-      "note": "ð¿ Best from November to May. Manta rays gather at cleaning stations daily â encounters are almost guaranteed in season.",
+      "includes": ["Snorkel gear", "Life jacket", "Marine biologist guide", "Fresh water & towels", "Light refreshments"],
+      "note": "🌿 Best from November to May. Manta rays gather at cleaning stations daily — encounters are almost guaranteed in season.",
       "active": true
     },
     {
@@ -90,18 +72,12 @@
       "tagLabel": "Water",
       "shortDesc": "Explore vibrant coral gardens teeming with colourful reef fish, turtles, and moray eels.",
       "fullDesc": "Dive into the crystal-clear waters of Fulidhoo's house reef and nearby dive spots. Encounter sea turtles, colourful reef fish, moray eels, and stunning coral formations in their natural habitat.",
-      "duration": "2â3 hours",
+      "duration": "2–3 hours",
       "groupSize": "Max 15",
       "timing": "All day",
       "extraMeta": "All levels",
-      "includes": [
-        "Snorkel mask, fins & vest",
-        "Underwater camera rental",
-        "Local reef guide",
-        "Fresh water & snacks",
-        "Post-snorkel beach time"
-      ],
-      "note": "ð¢ Fulidhoo house reef is home to resident sea turtles â encounters are very common!",
+      "includes": ["Snorkel mask, fins & vest", "Underwater camera rental", "Local reef guide", "Fresh water & snacks", "Post-snorkel beach time"],
+      "note": "🐢 Fulidhoo house reef is home to resident sea turtles — encounters are very common!",
       "active": true
     },
     {
@@ -110,20 +86,14 @@
       "category": "scenic",
       "image": "https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=600&q=80",
       "tagLabel": "Scenic",
-      "shortDesc": "Step onto a deserted white-sand bank in the middle of the ocean â your own private paradise.",
-      "fullDesc": "Step onto a pristine white sandbank rising from the turquoise ocean and enjoy a private picnic in the middle of the sea. This is a quintessential Maldives experience â completely secluded and absolutely breathtaking.",
-      "duration": "Half day (4â5 hrs)",
+      "shortDesc": "Step onto a deserted white-sand bank in the middle of the ocean — your own private paradise.",
+      "fullDesc": "Step onto a pristine white sandbank rising from the turquoise ocean and enjoy a private picnic in the middle of the sea. This is a quintessential Maldives experience — completely secluded and absolutely breathtaking.",
+      "duration": "Half day (4–5 hrs)",
       "groupSize": "Max 12",
       "timing": "Daytime",
       "extraMeta": "Private sandbank",
-      "includes": [
-        "Return speedboat transfer",
-        "Picnic spread",
-        "Snorkeling from the sandbank",
-        "Fresh coconuts",
-        "Sunshade & towels"
-      ],
-      "note": "ðï¸ Sandbars shift with the tides â we scout the best one each day for your visit.",
+      "includes": ["Return speedboat transfer", "Picnic spread", "Snorkeling from the sandbank", "Fresh coconuts", "Sunshade & towels"],
+      "note": "🏝️ Sandbars shift with the tides — we scout the best one each day for your visit.",
       "active": true
     },
     {
@@ -138,13 +108,8 @@
       "groupSize": "Max 15",
       "timing": "Evening",
       "extraMeta": "Aboard Jasmine",
-      "includes": [
-        "Cruise on Jasmine",
-        "Soft drinks & water",
-        "Light canapÃ©s",
-        "Dolphin spotting opportunity"
-      ],
-      "note": "ð Departure time varies by season to coincide with the golden hour â we'll confirm your exact time at booking.",
+      "includes": ["Cruise on Jasmine", "Soft drinks & water", "Light canapés", "Dolphin spotting opportunity"],
+      "note": "🌅 Departure time varies by season to coincide with the golden hour — we'll confirm your exact time at booking.",
       "active": true
     },
     {
@@ -153,19 +118,14 @@
       "category": "water",
       "image": "https://images.unsplash.com/photo-1580019542155-247062e19ce4?w=600&q=80",
       "tagLabel": "Water",
-      "shortDesc": "Try traditional Maldivian handline fishing under a canopy of stars â catch and cook on the island.",
+      "shortDesc": "Try traditional Maldivian handline fishing under a canopy of stars — catch and cook on the island.",
       "fullDesc": "Experience authentic Maldivian handline fishing under a sky full of stars. Our fishermen will teach you traditional techniques, and any catch can be prepared at Island Break Guest House for a fresh fish dinner.",
-      "duration": "2â3 hours",
+      "duration": "2–3 hours",
       "groupSize": "Max 10",
       "timing": "Evening/Night",
       "extraMeta": "Beginner friendly",
-      "includes": [
-        "Fishing rods & bait",
-        "Local fisherman guide",
-        "Fresh water & snacks",
-        "Fish preparation (catch & cook)"
-      ],
-      "note": "ð½ï¸ Catch-and-cook available! Any fish caught can be freshly prepared for your dinner at Island Break.",
+      "includes": ["Fishing rods & bait", "Local fisherman guide", "Fresh water & snacks", "Fish preparation (catch & cook)"],
+      "note": "🍽️ Catch-and-cook available! Any fish caught can be freshly prepared for your dinner at Island Break.",
       "active": true
     },
     {
@@ -175,20 +135,13 @@
       "image": "https://images.unsplash.com/photo-1589979481223-deb893043163?w=600&q=80",
       "tagLabel": "Scenic",
       "shortDesc": "Visit local islands, uninhabited nature reserves, and hidden gems only the locals know about.",
-      "fullDesc": "Explore multiple islands in Vaavu Atoll in one epic day â from local inhabited islands to uninhabited nature reserves. Discover Maldivian culture, pristine beaches, and hidden gems only the locals know.",
-      "duration": "Full day (6â8 hrs)",
+      "fullDesc": "Explore multiple islands in Vaavu Atoll in one epic day — from local inhabited islands to uninhabited nature reserves. Discover Maldivian culture, pristine beaches, and hidden gems only the locals know.",
+      "duration": "Full day (6–8 hrs)",
       "groupSize": "Max 12",
       "timing": "All day",
       "extraMeta": "Explorer level",
-      "includes": [
-        "Full-day boat charter",
-        "Island visits (2â3 stops)",
-        "Picnic lunch",
-        "Snorkeling at reef",
-        "Cultural experience",
-        "Fresh water & refreshments"
-      ],
-      "note": "ðºï¸ Route is customised based on tides and weather â we always ensure the best possible experience on the day.",
+      "includes": ["Full-day boat charter", "Island visits (2–3 stops)", "Picnic lunch", "Snorkeling at reef", "Cultural experience", "Fresh water & refreshments"],
+      "note": "🗺️ Route is customised based on tides and weather — we always ensure the best possible experience on the day.",
       "active": true
     }
   ],
@@ -196,7 +149,7 @@
     "address": "V. Fulidhoo, Vaavu Atoll, Maldives",
     "phone": "+960 XXX XXXX",
     "email": "info@discovervaavu.mv",
-    "hours": "Daily Â· Sunrise to Sunset",
+    "hours": "Daily · Sunrise to Sunset",
     "facebook": "#",
     "instagram": "#"
   }
