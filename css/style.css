@@ -919,3 +919,38 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--deep); }
 ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 3px; }
+
+/* ── WhatsApp Floating Button ── */
+.whatsapp-fab {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #25D366;
+  color: #fff;
+  border-radius: 50px;
+  padding: 14px 20px 14px 16px;
+  box-shadow: 0 6px 28px rgba(37,211,102,0.45);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  text-decoration: none;
+}
+.whatsapp-fab:hover {
+  background: #1ebe5d;
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 10px 36px rgba(37,211,102,0.55);
+}
+.whatsapp-fab svg { flex-shrink: 0; }
+.whatsapp-label { white-space: nowrap; }
+
+@media (max-width: 640px) {
+  .whatsapp-fab { bottom: 20px; right: 16px; padding: 13px 16px 13px 14px; font-size: 0.82rem; }
+  .whatsapp-label { display: none; }
+  .whatsapp-fab { border-radius: 50%; width: 54px; height: 54px; justify-content: center; padding: 0; }
+}
