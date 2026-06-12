@@ -219,6 +219,27 @@
       ],
       "note": "ð´ Can be combined with a Sandbank visit for the perfect full-day trip. Price varies based on group size and extras â contact us for a quote.",
       "active": true
+    },
+    {
+      "id": "3-point",
+      "title": "3 Point",
+      "category": "wildlife",
+      "tagLabel": "All in One",
+      "image": "assets/ex-3-point.jpg",
+      "price": "$45 Per Person",
+      "shortDesc": "Choose any 3 excursions from Coral Garden Snorkeling, Dolphin Watching, Manta Ray Watching, and Leopard Shark Watching for an unforgettable Maldivian adventure.",
+      "fullDesc": "Experience the best of the Maldives with a customized island adventure. Choose any three excursions from a range of exciting options, including Coral Garden Snorkeling, Dolphin Watching, Manta Ray Watching, and Leopard Shark Watching. Explore vibrant coral reefs, encounter majestic marine life, and create unforgettable memories in the crystal-clear waters of the Indian Ocean. Select your favorite three experiences and enjoy a day tailored to your interests.",
+      "duration": "1-2 hours",
+      "groupSize": "Min 2",
+      "timing": "Morning",
+      "extraMeta": "Snacks",
+      "includes": [
+        "Snorkel gear",
+        "Photos",
+        "Videos"
+      ],
+      "note": "",
+      "active": true
     }
   ],
   "contact": {
