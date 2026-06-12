@@ -58,9 +58,15 @@
     gtag('config', 'G-XXXXXXXXXX');
   </script>
 
-  <link rel="stylesheet" href="css/style.css" />
+  <!-- Performance: resource hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+  <link rel="dns-prefetch" href="https://maps.google.com" />
+  <!-- Preload hero image so it paints immediately -->
+  <link rel="preload" as="image" href="assets/hero-bg.jpg" />
+
+  <link rel="stylesheet" href="css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
 </head>
 <body>
@@ -69,7 +75,7 @@
 <nav id="navbar">
   <div class="nav-inner">
     <a href="#hero" class="nav-logo">
-      <img src="assets/logo.png" alt="Discover Vaavu" class="nav-logo-img" />
+      <img src="assets/logo.png" alt="Discover Vaavu" class="nav-logo-img" fetchpriority="high" />
     </a>
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
@@ -145,7 +151,7 @@
     <div class="about-grid">
       <div class="about-img-wrap" data-reveal>
         <div class="about-img-frame">
-          <img src="assets/fulidhoo-hero.jpg" alt="Fulidhoo Island" class="about-img" />
+          <img src="assets/fulidhoo-hero.jpg" alt="Fulidhoo Island" class="about-img" loading="lazy" />
           <div class="img-badge">
             <span>V. Fulidhoo</span>
             <small>Vaavu Atoll, Maldives</small>
@@ -300,7 +306,7 @@
   </div>
   <div class="footer-inner">
     <div class="footer-logo">
-      <img src="assets/logo.png" alt="Discover Vaavu" class="footer-logo-img" />
+      <img src="assets/logo.png" alt="Discover Vaavu" class="footer-logo-img" loading="lazy" />
       <p>Islandbreak Excursion<br/>V. Fulidhoo &middot; Vaavu Atoll &middot; Maldives</p>
     </div>
     <div class="footer-links">
