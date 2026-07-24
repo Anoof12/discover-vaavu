@@ -221,6 +221,7 @@ function initImageUploader({ pickBtnId, fileInputId, statusId, thumbId, onSucces
 ══════════════════════════════════════════ */
 function populateForms() {
   if (!siteData) return;
+  if (!siteData.reviews) siteData.reviews = [];
   const { hero, stats, about, excursions, contact } = siteData;
 
   setVal('heroTagline',    hero.tagline);
@@ -242,11 +243,14 @@ function populateForms() {
   setVal('contactHours',     contact.hours);
   setVal('contactFacebook',  contact.facebook);
   setVal('contactInstagram', contact.instagram);
+  setVal('contactWhatsapp',  contact.whatsapp);
+  setVal('contactWechat',    contact.wechat);
 
   document.getElementById('dashExCount').textContent =
     excursions.filter(e => e.active !== false).length;
 
   renderExcursionList();
+  renderReviewList();
 }
 
 function setVal(id, v) {
@@ -280,6 +284,8 @@ function collectAllFormData() {
   siteData.contact.hours     = document.getElementById('contactHours').value.trim();
   siteData.contact.facebook  = document.getElementById('contactFacebook').value.trim();
   siteData.contact.instagram = document.getElementById('contactInstagram').value.trim();
+  siteData.contact.whatsapp  = document.getElementById('contactWhatsapp').value.trim();
+  siteData.contact.wechat    = document.getElementById('contactWechat').value.trim();
 }
 
 /* ══════════════════════════════════════════
@@ -293,14 +299,15 @@ function renderExcursionList() {
   siteData.excursions.forEach((ex, idx) => {
     const card = document.createElement('div');
     card.className = `ex-admin-card${ex.active === false ? ' inactive' : ''}`;
+    const cover = (ex.images && ex.images[0]) || '';
     card.innerHTML = `
       <span class="drag-handle">⠿</span>
-      <div class="ex-admin-thumb" style="background-image:url('${adminImg(ex.image)}')"></div>
+      <div class="ex-admin-thumb" style="background-image:url('${adminImg(cover)}')"></div>
       <div class="ex-admin-info">
         <h4>${ex.title}</h4>
         <div class="ex-admin-meta">
-          <span class="ex-meta-tag">${ex.tagLabel || ''}</span>
-          <span class="ex-meta-tag">${ex.price || ex.duration || ''}</span>
+          ${(ex.tags || []).map(t => `<span class="ex-meta-tag">${t}</span>`).join('')}
+          <span class="ex-meta-tag">${ex.duration || ''}</span>
           <span class="ex-meta-tag ${ex.active === false ? 'inactive' : ''}">${ex.active === false ? 'Hidden' : 'Active'}</span>
         </div>
       </div>
@@ -379,13 +386,16 @@ async function updateAboutImageInHTML(newPath) {
 
 /* ── Drawer ── */
 let editingIdx = null;
+let currentExImages = [];
 
 document.getElementById('addExcursionBtn').addEventListener('click', () => openDrawer(null));
 document.getElementById('drawerClose').addEventListener('click',    closeDrawer);
 document.getElementById('drawerCancel').addEventListener('click',   closeDrawer);
 document.getElementById('drawerOverlay').addEventListener('click',  closeDrawer);
 
-/* Excursion image uploader inside drawer */
+/* Excursion multi-image uploader inside drawer:
+   each successful upload is appended to currentExImages rather than
+   replacing a single value. */
 initImageUploader({
   pickBtnId:   'exPickBtn',
   fileInputId: 'exImageFile',
@@ -395,56 +405,66 @@ initImageUploader({
     const id = document.getElementById('exId').value.trim()
               || slugify(document.getElementById('exTitle').value.trim())
               || 'excursion';
-    return `assets/ex-${id}.${ext}`;
+    return `assets/ex-${id}-${Date.now()}.${ext}`;
   },
   onSuccess: (path) => {
-    document.getElementById('exImage').value = path;
+    currentExImages.push(path);
+    renderExImageList();
+    document.getElementById('exImgPreview').style.backgroundImage = '';
+    document.getElementById('exUploadStatus').className = 'upload-status';
+    document.getElementById('exUploadStatus').textContent = 'Add another photo, or save the excursion';
   }
 });
+
+function renderExImageList() {
+  const list = document.getElementById('exImageList');
+  list.innerHTML = currentExImages.map((path, i) => `
+    <div class="multi-image-item">
+      <div class="multi-image-thumb" style="background-image:url('${adminImg(path)}')"></div>
+      ${i === 0 ? '<span class="multi-image-cover">Cover</span>' : ''}
+      <button type="button" class="multi-image-remove" data-i="${i}" title="Remove photo">✕</button>
+    </div>`).join('');
+  list.querySelectorAll('.multi-image-remove').forEach(btn =>
+    btn.addEventListener('click', () => {
+      currentExImages.splice(+btn.dataset.i, 1);
+      renderExImageList();
+    })
+  );
+}
 
 function openDrawer(idx) {
   editingIdx = idx;
   document.getElementById('drawerTitle').textContent = idx === null ? 'Add Excursion' : 'Edit Excursion';
+  const tagInputs = document.querySelectorAll('#exTagGrid input[type="checkbox"]');
 
   if (idx !== null) {
     const ex = siteData.excursions[idx];
     setVal('exId',        ex.id);
     setVal('exTitle',     ex.title);
-    setVal('exTagLabel',  ex.tagLabel);
-    setVal('exImage',     ex.image);
-    setVal('exPrice',     ex.price);
     setVal('exCategory',  ex.category);
     setVal('exShortDesc', ex.shortDesc);
     setVal('exFullDesc',  ex.fullDesc);
     setVal('exDuration',  ex.duration);
-    setVal('exGroupSize', ex.groupSize);
     setVal('exTiming',    ex.timing);
     setVal('exExtraMeta', ex.extraMeta);
     setVal('exIncludes',  (ex.includes || []).join('\n'));
     setVal('exNote',      ex.note);
     document.getElementById('exActive').checked = ex.active !== false;
-    // Show current image in thumb
-    const thumb  = document.getElementById('exImgPreview');
-    const status = document.getElementById('exUploadStatus');
-    if (ex.image) {
-      thumb.style.backgroundImage = `url('${adminImg(ex.image)}')`;
-      status.className = 'upload-status done';
-      status.textContent = `Current: ${ex.image.split('/').pop()}`;
-    } else {
-      thumb.style.backgroundImage = '';
-      status.className = 'upload-status';
-      status.textContent = 'No image — upload one below';
-    }
+    tagInputs.forEach(cb => { cb.checked = (ex.tags || []).includes(cb.value); });
+    currentExImages = [...(ex.images || [])];
   } else {
-    ['exId','exTitle','exTagLabel','exImage','exPrice','exShortDesc',
-     'exFullDesc','exDuration','exGroupSize','exTiming','exExtraMeta','exIncludes','exNote']
+    ['exId','exTitle','exShortDesc','exFullDesc','exDuration','exTiming','exExtraMeta','exIncludes','exNote']
       .forEach(id => setVal(id, ''));
     document.getElementById('exActive').checked = true;
-    document.getElementById('exImgPreview').style.backgroundImage = '';
-    const status = document.getElementById('exUploadStatus');
-    status.className = 'upload-status';
-    status.textContent = 'No image selected';
+    tagInputs.forEach(cb => { cb.checked = false; });
+    currentExImages = [];
   }
+
+  renderExImageList();
+  document.getElementById('exImgPreview').style.backgroundImage = '';
+  const status = document.getElementById('exUploadStatus');
+  status.className = 'upload-status';
+  status.textContent = currentExImages.length ? 'Add another photo, or save the excursion' : 'No photos yet — add one below';
 
   document.getElementById('drawerOverlay').classList.add('open');
   document.getElementById('excursionDrawer').classList.add('open');
@@ -460,17 +480,17 @@ document.getElementById('drawerSave').addEventListener('click', () => {
   const title = document.getElementById('exTitle').value.trim();
   if (!title) { toast('Title is required', 'err'); return; }
 
+  const tags = [...document.querySelectorAll('#exTagGrid input[type="checkbox"]:checked')].map(cb => cb.value);
+
   const ex = {
     id:        document.getElementById('exId').value.trim() || slugify(title),
     title,
     category:  document.getElementById('exCategory').value,
-    tagLabel:  document.getElementById('exTagLabel').value.trim() || capFirst(document.getElementById('exCategory').value),
-    image:     document.getElementById('exImage').value.trim(),
-    price:     document.getElementById('exPrice').value.trim(),
+    tags,
+    images:    [...currentExImages],
     shortDesc: document.getElementById('exShortDesc').value.trim(),
     fullDesc:  document.getElementById('exFullDesc').value.trim(),
     duration:  document.getElementById('exDuration').value.trim(),
-    groupSize: document.getElementById('exGroupSize').value.trim(),
     timing:    document.getElementById('exTiming').value.trim(),
     extraMeta: document.getElementById('exExtraMeta').value.trim(),
     includes:  document.getElementById('exIncludes').value.split('\n').map(s => s.trim()).filter(Boolean),
@@ -497,6 +517,137 @@ function deleteExcursion(idx) {
   siteData.excursions.splice(idx, 1);
   renderExcursionList();
   toast('Excursion deleted — click Publish to go live', 'ok');
+}
+
+/* ══════════════════════════════════════════
+   REVIEWS
+══════════════════════════════════════════ */
+function renderReviewList() {
+  const list = document.getElementById('reviewList');
+  if (!list || !siteData) return;
+  list.innerHTML = '';
+
+  (siteData.reviews || []).forEach((rv, idx) => {
+    const card = document.createElement('div');
+    card.className = 'ex-admin-card';
+    const stars = '★'.repeat(rv.rating || 5) + '☆'.repeat(Math.max(0, 5 - (rv.rating || 5)));
+    card.innerHTML = `
+      <div class="ex-admin-thumb" style="background-image:url('${adminImg(rv.photo)}')"></div>
+      <div class="ex-admin-info">
+        <h4>${rv.name} <small style="color:var(--text-sm);font-weight:400;">— ${rv.country || ''}</small></h4>
+        <div class="ex-admin-meta">
+          <span class="ex-meta-tag">${stars}</span>
+        </div>
+      </div>
+      <div class="ex-admin-actions">
+        <button class="btn-edit-ex" data-idx="${idx}">Edit</button>
+        <button class="btn-del-ex"  data-idx="${idx}">Delete</button>
+      </div>`;
+    list.appendChild(card);
+  });
+
+  list.querySelectorAll('.btn-edit-ex').forEach(b =>
+    b.addEventListener('click', () => openReviewDrawer(+b.dataset.idx))
+  );
+  list.querySelectorAll('.btn-del-ex').forEach(b =>
+    b.addEventListener('click', () => deleteReview(+b.dataset.idx))
+  );
+}
+
+let editingReviewIdx = null;
+
+document.getElementById('addReviewBtn').addEventListener('click', () => openReviewDrawer(null));
+document.getElementById('reviewDrawerClose').addEventListener('click',  closeReviewDrawer);
+document.getElementById('reviewDrawerCancel').addEventListener('click', closeReviewDrawer);
+document.getElementById('reviewDrawerOverlay').addEventListener('click', closeReviewDrawer);
+
+initImageUploader({
+  pickBtnId:   'rvPickBtn',
+  fileInputId: 'rvImageFile',
+  statusId:    'rvUploadStatus',
+  thumbId:     'rvImgPreview',
+  repoPathFn:  (ext) => {
+    const id = document.getElementById('rvId').value.trim() || `review-${Date.now()}`;
+    return `assets/review-${id}.${ext}`;
+  },
+  onSuccess: (path) => {
+    document.getElementById('rvImage').value = path;
+  }
+});
+
+function openReviewDrawer(idx) {
+  editingReviewIdx = idx;
+  document.getElementById('reviewDrawerTitle').textContent = idx === null ? 'Add Review' : 'Edit Review';
+
+  const thumb  = document.getElementById('rvImgPreview');
+  const status = document.getElementById('rvUploadStatus');
+
+  if (idx !== null) {
+    const rv = siteData.reviews[idx];
+    setVal('rvId',      rv.id);
+    setVal('rvName',    rv.name);
+    setVal('rvCountry', rv.country);
+    setVal('rvRating',  rv.rating || 5);
+    setVal('rvText',    rv.text);
+    setVal('rvImage',   rv.photo);
+    if (rv.photo) {
+      thumb.style.backgroundImage = `url('${adminImg(rv.photo)}')`;
+      status.className = 'upload-status done';
+      status.textContent = `Current: ${rv.photo.split('/').pop()}`;
+    } else {
+      thumb.style.backgroundImage = '';
+      status.className = 'upload-status';
+      status.textContent = 'No photo selected';
+    }
+  } else {
+    ['rvId','rvName','rvCountry','rvText','rvImage'].forEach(id => setVal(id, ''));
+    setVal('rvRating', 5);
+    thumb.style.backgroundImage = '';
+    status.className = 'upload-status';
+    status.textContent = 'No photo selected';
+  }
+
+  document.getElementById('reviewDrawerOverlay').classList.add('open');
+  document.getElementById('reviewDrawer').classList.add('open');
+}
+
+function closeReviewDrawer() {
+  document.getElementById('reviewDrawerOverlay').classList.remove('open');
+  document.getElementById('reviewDrawer').classList.remove('open');
+  editingReviewIdx = null;
+}
+
+document.getElementById('reviewDrawerSave').addEventListener('click', () => {
+  const name = document.getElementById('rvName').value.trim();
+  if (!name) { toast('Guest name is required', 'err'); return; }
+
+  const rv = {
+    id:      document.getElementById('rvId').value.trim() || slugify(name) + '-' + Date.now(),
+    name,
+    country: document.getElementById('rvCountry').value.trim(),
+    rating:  +document.getElementById('rvRating').value || 5,
+    text:    document.getElementById('rvText').value.trim(),
+    photo:   document.getElementById('rvImage').value.trim()
+  };
+
+  if (!siteData.reviews) siteData.reviews = [];
+  if (editingReviewIdx === null) {
+    siteData.reviews.push(rv);
+    toast('✓ Review added — click Publish to go live', 'ok');
+  } else {
+    siteData.reviews[editingReviewIdx] = rv;
+    toast('✓ Review updated — click Publish to go live', 'ok');
+  }
+
+  renderReviewList();
+  closeReviewDrawer();
+});
+
+function deleteReview(idx) {
+  if (!confirm(`Delete review from "${siteData.reviews[idx].name}"?`)) return;
+  siteData.reviews.splice(idx, 1);
+  renderReviewList();
+  toast('Review deleted — click Publish to go live', 'ok');
 }
 
 /* ══════════════════════════════════════════
@@ -681,7 +832,8 @@ function switchSection(name) {
   document.querySelector(`.nav-item[data-section="${name}"]`)?.classList.add('active');
   const titles = {
     dashboard: 'Dashboard', hero: 'Hero Section', stats: 'Stats',
-    about: 'About', excursions: 'Excursions', contact: 'Contact Info', settings: 'Settings'
+    about: 'About', excursions: 'Excursions', reviews: 'Reviews',
+    contact: 'Contact Info', settings: 'Settings'
   };
   document.getElementById('topbarTitle').textContent = titles[name] || name;
 }
@@ -745,7 +897,8 @@ function defaultContent() {
     stats: { guests: 500, excursionTypes: 9, satisfaction: 100, experience: 5 },
     about: { body1: '', body2: '' },
     excursions: [],
-    contact: { address: '', phone: '', email: '', hours: '', facebook: '#', instagram: '#' }
+    reviews: [],
+    contact: { address: '', phone: '', whatsapp: '', email: '', hours: '', facebook: '#', instagram: '#', wechat: '' }
   };
 }
 

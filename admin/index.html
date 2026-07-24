@@ -60,6 +60,9 @@
       <a href="#" class="nav-item" data-section="excursions">
         <span class="nav-icon">🛥️</span><span>Excursions</span>
       </a>
+      <a href="#" class="nav-item" data-section="reviews">
+        <span class="nav-icon">⭐</span><span>Reviews</span>
+      </a>
       <a href="#" class="nav-item" data-section="contact">
         <span class="nav-icon">📞</span><span>Contact Info</span>
       </a>
@@ -240,6 +243,20 @@
       </div>
     </section>
 
+    <!-- ── Reviews ── -->
+    <section class="admin-section hidden" id="sec-reviews">
+      <div class="section-head">
+        <div>
+          <h2>Reviews</h2>
+          <p>Manage the testimonials shown in the homepage carousel.</p>
+        </div>
+        <button class="btn-add-ex" id="addReviewBtn">+ Add Review</button>
+      </div>
+      <div class="excursion-list" id="reviewList">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
     <!-- ── Contact ── -->
     <section class="admin-section hidden" id="sec-contact">
       <div class="section-head"><h2>Contact Info</h2><p>Shown in the "Find Us" section.</p></div>
@@ -272,6 +289,16 @@
           <div class="form-group">
             <label>📸 Instagram URL</label>
             <input type="url" id="contactInstagram" placeholder="https://instagram.com/..." />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>💬 WhatsApp Number</label>
+            <input type="text" id="contactWhatsapp" placeholder="+960 9822231" />
+          </div>
+          <div class="form-group">
+            <label>🟢 WeChat ID</label>
+            <input type="text" id="contactWechat" placeholder="e.g. DiscoverVaavu" />
           </div>
         </div>
         <p style="font-size:0.82rem;color:var(--text-sm);margin-top:8px;">✏️ Edit and click <strong style="color:var(--teal-lt)">Publish Changes</strong> in the top bar to go live.</p>
@@ -348,24 +375,31 @@
         </select>
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-group">
-        <label>Tag Label <small>(shown on card)</small></label>
-        <input type="text" id="exTagLabel" placeholder="e.g. Wildlife" />
-      </div>
-      <div class="form-group">
-        <label>Price <small>(shown on card)</small></label>
-        <input type="text" id="exPrice" placeholder="e.g. $45 per person" />
+    <div class="form-group">
+      <label>Tags <small>(shown as badges on card &amp; details)</small></label>
+      <div class="tag-checkbox-grid" id="exTagGrid">
+        <label class="tag-checkbox"><input type="checkbox" value="Best Seller" /> ⭐ Best Seller</label>
+        <label class="tag-checkbox"><input type="checkbox" value="Family Friendly" /> 👨‍👩‍👧 Family Friendly</label>
+        <label class="tag-checkbox"><input type="checkbox" value="Snorkeling" /> 🤿 Snorkeling</label>
+        <label class="tag-checkbox"><input type="checkbox" value="Shark Experience" /> 🦈 Shark Experience</label>
+        <label class="tag-checkbox"><input type="checkbox" value="Dolphin Watching" /> 🐬 Dolphin Watching</label>
+        <label class="tag-checkbox"><input type="checkbox" value="Resort Day Trip" /> 🏝️ Resort Day Trip</label>
+        <label class="tag-checkbox"><input type="checkbox" value="Half Day" /> ⏱️ Half Day</label>
+        <label class="tag-checkbox"><input type="checkbox" value="Full Day" /> 🌞 Full Day</label>
+        <label class="tag-checkbox"><input type="checkbox" value="Beginner Friendly" /> 🌱 Beginner Friendly</label>
       </div>
     </div>
     <div class="form-group">
-      <label>Excursion Photo</label>
+      <label>Excursion Photos <small>(first photo is used as the cover image)</small></label>
+      <div class="multi-image-list" id="exImageList">
+        <!-- Populated by JS -->
+      </div>
       <div class="upload-zone" id="exUploadZone">
         <div class="upload-thumb" id="exImgPreview"></div>
         <div class="upload-info">
-          <span class="upload-status" id="exUploadStatus">No image selected</span>
+          <span class="upload-status" id="exUploadStatus">No photos yet — add one below</span>
           <div class="upload-btns">
-            <button type="button" class="btn-upload" id="exPickBtn">📁 Choose Photo</button>
+            <button type="button" class="btn-upload" id="exPickBtn">📁 Add Photo</button>
           </div>
         </div>
       </div>
@@ -386,19 +420,13 @@
         <input type="text" id="exDuration" placeholder="e.g. 3–4 hours" />
       </div>
       <div class="form-group">
-        <label>Group Size</label>
-        <input type="text" id="exGroupSize" placeholder="e.g. Max 10" />
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="form-group">
         <label>Timing</label>
         <input type="text" id="exTiming" placeholder="e.g. Morning" />
       </div>
-      <div class="form-group">
-        <label>Extra Meta</label>
-        <input type="text" id="exExtraMeta" placeholder="e.g. Snorkel included" />
-      </div>
+    </div>
+    <div class="form-group">
+      <label>Extra Meta</label>
+      <input type="text" id="exExtraMeta" placeholder="e.g. Snorkel included" />
     </div>
     <div class="form-group">
       <label>What's Included <small>(one item per line)</small></label>
@@ -421,6 +449,62 @@
   <div class="drawer-footer">
     <button class="btn-cancel" id="drawerCancel">Cancel</button>
     <button class="btn-save-drawer" id="drawerSave">Save Excursion</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     REVIEW EDITOR DRAWER
+════════════════════════════════════ -->
+<div class="drawer-overlay" id="reviewDrawerOverlay"></div>
+<div class="drawer" id="reviewDrawer">
+  <div class="drawer-head">
+    <h3 id="reviewDrawerTitle">Add Review</h3>
+    <button class="drawer-close" id="reviewDrawerClose">✕</button>
+  </div>
+  <div class="drawer-body">
+    <input type="hidden" id="rvId" />
+    <div class="form-row">
+      <div class="form-group">
+        <label>Guest Name</label>
+        <input type="text" id="rvName" placeholder="e.g. Sarah Thompson" />
+      </div>
+      <div class="form-group">
+        <label>Country</label>
+        <input type="text" id="rvCountry" placeholder="e.g. United Kingdom" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Rating</label>
+      <select id="rvRating">
+        <option value="5">★★★★★ (5)</option>
+        <option value="4">★★★★☆ (4)</option>
+        <option value="3">★★★☆☆ (3)</option>
+        <option value="2">★★☆☆☆ (2)</option>
+        <option value="1">★☆☆☆☆ (1)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Review Text</label>
+      <textarea id="rvText" rows="4" placeholder="What did the guest say?"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Guest Photo <small>(optional)</small></label>
+      <div class="upload-zone" id="rvUploadZone">
+        <div class="upload-thumb" id="rvImgPreview"></div>
+        <div class="upload-info">
+          <span class="upload-status" id="rvUploadStatus">No photo selected</span>
+          <div class="upload-btns">
+            <button type="button" class="btn-upload" id="rvPickBtn">📁 Choose Photo</button>
+          </div>
+        </div>
+      </div>
+      <input type="file"   id="rvImageFile" accept="image/*" hidden />
+      <input type="hidden" id="rvImage" />
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn-cancel" id="reviewDrawerCancel">Cancel</button>
+    <button class="btn-save-drawer" id="reviewDrawerSave">Save Review</button>
   </div>
 </div>
 

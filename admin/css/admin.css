@@ -460,6 +460,44 @@ small { font-size: 0.75rem; color: var(--text-sm); }
   0%, 100% { opacity: 1; } 50% { opacity: 0.6; }
 }
 
+/* ── Tag checkbox grid ── */
+.tag-checkbox-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+}
+.tag-checkbox {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: 8px; padding: 9px 12px;
+  font-size: 0.82rem; cursor: pointer; transition: all var(--trans);
+}
+.tag-checkbox:has(input:checked) { border-color: var(--teal); background: rgba(14,154,167,0.12); color: var(--teal-lt); }
+.tag-checkbox input { width: auto; accent-color: var(--teal); }
+
+/* ── Multi-image list ── */
+.multi-image-list {
+  display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;
+}
+.multi-image-list:empty { display: none; }
+.multi-image-item { position: relative; }
+.multi-image-thumb {
+  width: 84px; height: 64px; border-radius: 8px;
+  background: var(--surface) center/cover no-repeat;
+  border: 1px solid var(--border);
+}
+.multi-image-cover {
+  position: absolute; bottom: 3px; left: 3px;
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  background: rgba(14,154,167,0.9); color: #fff; padding: 2px 6px; border-radius: 4px;
+}
+.multi-image-remove {
+  position: absolute; top: -6px; right: -6px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--red); color: #fff; border: 2px solid var(--surface);
+  font-size: 0.65rem; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: transform var(--trans);
+}
+.multi-image-remove:hover { transform: scale(1.15); }
+
 .toggle-group { flex-direction: row !important; align-items: center; }
 .toggle-label { display: flex; align-items: center; justify-content: space-between; width: 100%; cursor: pointer; }
 .toggle-label > span { display: flex; flex-direction: column; }

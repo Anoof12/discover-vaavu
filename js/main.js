@@ -102,6 +102,15 @@ function populateContact(c) {
   setText('contactHours',   c.hours);
   setHref('socialFacebook', c.facebook);
   setHref('socialInstagram', c.instagram);
+
+  const waDigits = (c.whatsapp || c.phone || '').replace(/[^\d]/g, '');
+  setHref('methodWhatsapp', waDigits ? `https://wa.me/${waDigits}` : '#');
+  setHref('methodInstagram', c.instagram);
+  if (c.wechat) {
+    setHref('methodWechat', `weixin://dl/chat?${encodeURIComponent(c.wechat)}`);
+    const wechatEl = document.getElementById('methodWechat');
+    if (wechatEl) wechatEl.querySelector('span').textContent = `WeChat: ${c.wechat}`;
+  }
 }
 
 function setText(id, val) {
@@ -113,8 +122,75 @@ function setHref(id, val) {
   if (el && val) el.href = val;
 }
 
+/* ── Tag badge helpers ── */
+const TAG_ICONS = {
+  'Best Seller':        '⭐',
+  'Family Friendly':    '👨‍👩‍👧',
+  'Snorkeling':         '🤿',
+  'Shark Experience':   '🦈',
+  'Dolphin Watching':   '🐬',
+  'Resort Day Trip':    '🏝️',
+  'Half Day':           '⏱️',
+  'Full Day':           '🌞',
+  'Beginner Friendly':  '🌱'
+};
+function tagSlug(tag) {
+  return tag.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+function renderBadges(tags) {
+  return (tags || []).map(t =>
+    `<span class="badge badge--${tagSlug(t)}">${TAG_ICONS[t] || '✦'} ${t}</span>`
+  ).join('');
+}
+
+/* ── Image carousel builder ──
+   Builds a track + arrows + dots inside a wrapper element.
+   Returns { setIndex } so callers can control it externally if needed. */
+function buildCarousel(wrapEl, trackEl, prevEl, nextEl, dotsEl, images, altBase) {
+  const imgs = images && images.length ? images : ['assets/logo.png'];
+  trackEl.innerHTML = imgs.map(src =>
+    `<div class="carousel-slide" style="background-image:url('${src}')" role="img" aria-label="${altBase}"></div>`
+  ).join('');
+
+  const multi = imgs.length > 1;
+  if (prevEl) prevEl.style.display = multi ? '' : 'none';
+  if (nextEl) nextEl.style.display = multi ? '' : 'none';
+  if (dotsEl) {
+    dotsEl.style.display = multi ? '' : 'none';
+    dotsEl.innerHTML = multi
+      ? imgs.map((_, i) => `<button class="carousel-dot${i === 0 ? ' active' : ''}" data-i="${i}" aria-label="Photo ${i + 1}"></button>`).join('')
+      : '';
+  }
+
+  let idx = 0;
+  function go(i) {
+    idx = (i + imgs.length) % imgs.length;
+    trackEl.style.transform = `translateX(-${idx * 100}%)`;
+    if (dotsEl) dotsEl.querySelectorAll('.carousel-dot').forEach((d, di) => d.classList.toggle('active', di === idx));
+  }
+  if (prevEl) prevEl.onclick = (e) => { e.stopPropagation(); go(idx - 1); };
+  if (nextEl) nextEl.onclick = (e) => { e.stopPropagation(); go(idx + 1); };
+  if (dotsEl) dotsEl.querySelectorAll('.carousel-dot').forEach(d =>
+    d.addEventListener('click', (e) => { e.stopPropagation(); go(+d.dataset.i); })
+  );
+
+  if (multi && wrapEl) {
+    let startX = null;
+    wrapEl.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; }, { passive: true });
+    wrapEl.addEventListener('touchend', (e) => {
+      if (startX === null) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      if (Math.abs(dx) > 40) go(dx < 0 ? idx + 1 : idx - 1);
+      startX = null;
+    }, { passive: true });
+  }
+
+  go(0);
+  return { go };
+}
+
 /* ── Render Excursions ── */
-function renderExcursions(excursions) {
+function renderExcursions(excursions, contact) {
   const grid = document.getElementById('excursionsGrid');
   if (!grid) return;
   grid.innerHTML = '';
@@ -125,26 +201,34 @@ function renderExcursions(excursions) {
     card.dataset.reveal = '';
     card.innerHTML = `
       <div class="ex-img-wrap">
-        <div class="ex-img" style="background-image:url('${ex.image}')"></div>
-        <div class="ex-tag">${ex.tagLabel}</div>
-        ${ex.price ? `<div class="ex-price">${ex.price}</div>` : ''}
+        <div class="ex-img-track"></div>
+        <button class="carousel-arrow carousel-prev" aria-label="Previous photo">&#10094;</button>
+        <button class="carousel-arrow carousel-next" aria-label="Next photo">&#10095;</button>
+        <div class="carousel-dots"></div>
+        <div class="ex-badges">${renderBadges(ex.tags)}</div>
       </div>
       <div class="ex-body">
         <h3>${ex.title}</h3>
         <p>${ex.shortDesc}</p>
         <div class="ex-meta">
           <span>⏱ ${ex.duration}</span>
-          <span>👥 ${ex.groupSize}</span>
           <span>🕐 ${ex.timing}</span>
         </div>
         <button class="ex-detail-btn" data-id="${ex.id}">View Details</button>
       </div>`;
     grid.appendChild(card);
+
+    const wrap  = card.querySelector('.ex-img-wrap');
+    const track = card.querySelector('.ex-img-track');
+    const prev  = card.querySelector('.carousel-prev');
+    const next  = card.querySelector('.carousel-next');
+    const dots  = card.querySelector('.carousel-dots');
+    buildCarousel(wrap, track, prev, next, dots, ex.images, ex.title);
   });
 
   /* Re-attach filter, modal, reveal for newly created cards */
   attachFilterListeners();
-  attachModalListeners(excursions);
+  attachModalListeners(excursions, contact);
   initReveal();
 }
 
@@ -177,22 +261,38 @@ function attachFilterListeners() {
 }
 
 /* ── Modal ── */
-function attachModalListeners(excursions) {
+function attachModalListeners(excursions, contact) {
   const overlay    = document.getElementById('modalOverlay');
   const modalClose = document.getElementById('modalClose');
+  const bookBtn    = document.getElementById('modalBookBtn');
+  const waDigits   = ((contact && (contact.whatsapp || contact.phone)) || '').replace(/[^\d]/g, '');
 
   function openModal(id) {
     const ex = excursions.find(e => e.id === id);
     if (!ex) return;
-    document.getElementById('modalImg').style.backgroundImage = `url('${ex.image}')`;
-    document.getElementById('modalTag').textContent   = ex.tagLabel;
+
+    buildCarousel(
+      document.querySelector('#modal .modal-img-wrap'),
+      document.getElementById('modalImgTrack'),
+      document.getElementById('modalPrev'),
+      document.getElementById('modalNext'),
+      document.getElementById('modalDots'),
+      ex.images,
+      ex.title
+    );
+
+    document.getElementById('modalTags').innerHTML = renderBadges(ex.tags);
     document.getElementById('modalTitle').textContent = ex.title;
     document.getElementById('modalDesc').textContent  = ex.fullDesc;
     document.getElementById('modalMeta').innerHTML    = [
-      `⏱ ${ex.duration}`, `👥 ${ex.groupSize}`, `🕐 ${ex.timing}`, ex.extraMeta ? `✨ ${ex.extraMeta}` : ''
+      `⏱ ${ex.duration}`, `🕐 ${ex.timing}`, ex.extraMeta ? `✨ ${ex.extraMeta}` : ''
     ].filter(Boolean).map(m => `<span>${m}</span>`).join('');
     document.getElementById('modalIncludes').innerHTML = (ex.includes||[]).map(i=>`<li>${i}</li>`).join('');
     document.getElementById('modalNote').textContent   = ex.note || '';
+
+    const waMessage = `Hello Discover Vaavu! I'd like to book the ${ex.title} excursion.`;
+    bookBtn.href = waDigits ? `https://wa.me/${waDigits}?text=${encodeURIComponent(waMessage)}` : '#';
+
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -208,6 +308,62 @@ function attachModalListeners(excursions) {
   if (modalClose) { modalClose.onclick = closeModal; }
   overlay.onclick = e => { if (e.target === overlay) closeModal(); };
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+}
+
+/* ── Reviews carousel ── */
+function initReviews(reviews) {
+  const track = document.getElementById('reviewsTrack');
+  const dots  = document.getElementById('reviewsDots');
+  const carousel = document.getElementById('reviewsCarousel');
+  if (!track || !reviews || !reviews.length) return;
+
+  track.innerHTML = reviews.map(r => {
+    const initials = (r.name || '?').split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();
+    const avatar = r.photo
+      ? `<div class="review-avatar" style="background-image:url('${r.photo}')"></div>`
+      : `<div class="review-avatar review-avatar-fallback">${initials}</div>`;
+    const stars = '★'.repeat(r.rating || 5) + '☆'.repeat(Math.max(0, 5 - (r.rating || 5)));
+    return `
+      <div class="review-card">
+        ${avatar}
+        <div class="review-stars">${stars}</div>
+        <p class="review-text">"${r.text}"</p>
+        <div class="review-name">${r.name}</div>
+        <div class="review-country">${r.country}</div>
+      </div>`;
+  }).join('');
+
+  dots.innerHTML = reviews.map((_, i) => `<button class="carousel-dot${i === 0 ? ' active' : ''}" data-i="${i}" aria-label="Review ${i + 1}"></button>`).join('');
+
+  let idx = 0;
+  let timer;
+  function go(i) {
+    idx = (i + reviews.length) % reviews.length;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+    dots.querySelectorAll('.carousel-dot').forEach((d, di) => d.classList.toggle('active', di === idx));
+  }
+  function next() { go(idx + 1); }
+  function start() { timer = setInterval(next, 5000); }
+  function stop()  { clearInterval(timer); }
+
+  dots.querySelectorAll('.carousel-dot').forEach(d =>
+    d.addEventListener('click', () => { go(+d.dataset.i); stop(); start(); })
+  );
+  carousel.addEventListener('mouseenter', stop);
+  carousel.addEventListener('mouseleave', start);
+
+  let startX = null;
+  carousel.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; stop(); }, { passive: true });
+  carousel.addEventListener('touchend', (e) => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) go(dx < 0 ? idx + 1 : idx - 1);
+    startX = null;
+    start();
+  }, { passive: true });
+
+  go(0);
+  start();
 }
 
 /* ── Parallax hero ── */
@@ -248,7 +404,8 @@ async function boot() {
   populateHero(data.hero);
   populateAbout(data.about);
   populateContact(data.contact);
-  renderExcursions(data.excursions);
+  renderExcursions(data.excursions, data.contact);
+  initReviews(data.reviews || []);
   initStats(data);
   initReveal();
 }
@@ -270,13 +427,16 @@ function getDefaults() {
       body2: 'Our boat Jasmine is your gateway to Vaavu\'s pristine reefs, hidden sandbars, and abundant marine life.'
     },
     excursions: [],
+    reviews: [],
     contact: {
       address: 'V. Fulidhoo, Vaavu Atoll, Maldives',
       phone: '+960 XXX XXXX',
+      whatsapp: '+960 XXX XXXX',
       email: 'info@discovervaavu.mv',
       hours: 'Daily · Sunrise to Sunset',
       facebook: '#',
-      instagram: '#'
+      instagram: '#',
+      wechat: ''
     }
   };
 }
