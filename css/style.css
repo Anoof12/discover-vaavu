@@ -21,8 +21,8 @@
 
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body { font-family: 'Poppins', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; }
+html { scroll-behavior: smooth; font-size: 16px; overflow-x: hidden; overscroll-behavior-x: none; }
+body { font-family: 'Poppins', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; overscroll-behavior-x: none; }
 img { max-width: 100%; display: block; }
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
@@ -514,7 +514,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .ex-card.hidden { display: none; }
 
-.ex-img-wrap { position: relative; overflow: hidden; height: 220px; }
+.ex-img-wrap { position: relative; overflow: hidden; height: 220px; touch-action: pan-y; }
 .ex-img-track, .modal-img-track {
   display: flex;
   width: 100%; height: 100%;
@@ -689,7 +689,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   transition: background var(--trans);
 }
 .modal-close:hover { background: rgba(14,154,167,0.8); }
-.modal-img-wrap { position: relative; height: 260px; overflow: hidden; }
+.modal-img-wrap { position: relative; height: 260px; overflow: hidden; touch-action: pan-y; }
 .modal-tags {
   position: absolute;
   bottom: 14px; left: 20px; right: 20px;
@@ -762,7 +762,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   padding: 100px 0;
   background: linear-gradient(160deg, #f0fbfc 0%, #fdf6ec 60%, #f5feff 100%);
 }
-.reviews-carousel { position: relative; max-width: 720px; margin: 0 auto; }
+.reviews-carousel { position: relative; max-width: 720px; margin: 0 auto; touch-action: pan-y; }
 .reviews-track {
   display: flex;
   transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
