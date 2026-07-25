@@ -1,4 +1,6 @@
 {
-  "passwordHash": "d08d2cff6926fcee3437879d79ca7ef40088757a3817709fdb3c1364ae1989fe",
-  "repo": "Anoof12/discover-vaavu"
+  "passwordHash": "360ea51ceea84ac14ff5662588147be3444687c0935bce390334083a82cdc087",
+  "repo": "Anoof12/discover-vaavu",
+  "salt": "10f415731429ad3898a0b392a90a78df",
+  "iterations": 100000
 }
