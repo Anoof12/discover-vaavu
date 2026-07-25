@@ -37,29 +37,52 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 /* ══════════════════════════════════════════
    AUTH
+   Passwords are hashed with salted PBKDF2 (100k rounds) so the hash
+   published in data/admin.json can't be cracked with a rainbow table.
+   Older configs without a salt are verified against plain SHA-256 for
+   one login, then upgraded automatically the next time the password
+   is changed. There is no server here — this only protects against
+   casual/offline hash cracking, not someone who already holds a
+   valid GitHub token with write access to this repo.
 ══════════════════════════════════════════ */
+const PBKDF2_ITERATIONS = 100000;
+const LOGIN_FAILS_KEY    = 'dv_admin_fails';
+const LOGIN_UNLOCK_KEY   = 'dv_admin_unlock_at';
+
 function isLoggedIn() { return sessionStorage.getItem('dv_admin') === '1'; }
 
 function initLogin() {
   const form  = document.getElementById('loginForm');
   const input = document.getElementById('loginPass');
   const err   = document.getElementById('loginError');
+  const submitBtn = form.querySelector('button[type="submit"]');
 
   document.getElementById('togglePass').addEventListener('click', () => {
     input.type = input.type === 'password' ? 'text' : 'password';
   });
 
+  applyLoginLockout(submitBtn, err);
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     err.textContent = '';
-    const hash   = await sha256(input.value.trim());
-    const stored = adminCfg?.passwordHash || 'd08d2cff6926fcee3437879d79ca7ef40088757a3817709fdb3c1364ae1989fe';
-    if (hash === stored) {
+
+    if (!adminCfg) {
+      err.textContent = 'Could not load admin config from GitHub. Check your connection and reload.';
+      return;
+    }
+
+    const ok = await verifyPassword(input.value.trim(), adminCfg);
+    if (ok) {
+      sessionStorage.removeItem(LOGIN_FAILS_KEY);
+      sessionStorage.removeItem(LOGIN_UNLOCK_KEY);
       sessionStorage.setItem('dv_admin', '1');
       showShell();
       await loadContent();
     } else {
-      err.textContent = 'Incorrect password. Try again.';
+      recordFailedLogin();
+      applyLoginLockout(submitBtn, err);
+      if (!err.textContent) err.textContent = 'Incorrect password. Try again.';
       input.value = '';
       input.focus();
     }
@@ -71,9 +94,70 @@ function initLogin() {
   });
 }
 
+/* Slows down repeated guesses through the UI. Not real rate limiting
+   (anyone with devtools can call verifyPassword directly), just a
+   cheap deterrent for casual attempts. Unlock time is an absolute
+   timestamp so refreshing the page can't reset the wait. */
+function recordFailedLogin() {
+  const n = (parseInt(sessionStorage.getItem(LOGIN_FAILS_KEY), 10) || 0) + 1;
+  sessionStorage.setItem(LOGIN_FAILS_KEY, String(n));
+  if (n >= 3) {
+    const waitSec = Math.min(60, Math.pow(2, n - 2));
+    sessionStorage.setItem(LOGIN_UNLOCK_KEY, String(Date.now() + waitSec * 1000));
+  }
+}
+
+function applyLoginLockout(submitBtn, err) {
+  const unlockAt = parseInt(sessionStorage.getItem(LOGIN_UNLOCK_KEY), 10) || 0;
+  let remaining = Math.ceil((unlockAt - Date.now()) / 1000);
+  if (remaining <= 0) return;
+
+  submitBtn.disabled = true;
+  err.textContent = `Too many attempts. Try again in ${remaining}s.`;
+  const timer = setInterval(() => {
+    remaining -= 1;
+    if (remaining <= 0) {
+      clearInterval(timer);
+      submitBtn.disabled = false;
+      err.textContent = '';
+      sessionStorage.removeItem(LOGIN_UNLOCK_KEY);
+    } else {
+      err.textContent = `Too many attempts. Try again in ${remaining}s.`;
+    }
+  }, 1000);
+}
+
+async function verifyPassword(candidate, cfg) {
+  if (cfg.salt && cfg.iterations) {
+    const hash = await pbkdf2Hex(candidate, cfg.salt, cfg.iterations);
+    return hash === cfg.passwordHash;
+  }
+  // Legacy unsalted config — verified once, upgraded on next password change.
+  const hash = await sha256(candidate);
+  return !!cfg.passwordHash && hash === cfg.passwordHash;
+}
+
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
   return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function randomSaltHex(bytes = 16) {
+  const arr = crypto.getRandomValues(new Uint8Array(bytes));
+  return Array.from(arr).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+async function pbkdf2Hex(password, saltHex, iterations) {
+  const saltBytes = new Uint8Array(saltHex.match(/.{2}/g).map(b => parseInt(b, 16)));
+  const keyMaterial = await crypto.subtle.importKey(
+    'raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveBits']
+  );
+  const bits = await crypto.subtle.deriveBits(
+    { name: 'PBKDF2', salt: saltBytes, iterations, hash: 'SHA-256' },
+    keyMaterial,
+    256
+  );
+  return Array.from(new Uint8Array(bits)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 function showShell() {
@@ -765,8 +849,7 @@ async function changePassword() {
   const confirm = document.getElementById('confirmPass').value;
   const msg     = document.getElementById('passMsg');
 
-  const stored  = adminCfg?.passwordHash || 'd08d2cff6926fcee3437879d79ca7ef40088757a3817709fdb3c1364ae1989fe';
-  if (await sha256(current) !== stored) {
+  if (!adminCfg || !(await verifyPassword(current, adminCfg))) {
     msg.className = 'pass-msg err'; msg.textContent = 'Current password is incorrect.'; return;
   }
   if (newPw.length < 8) {
@@ -782,8 +865,9 @@ async function changePassword() {
   }
 
   try {
-    const newHash = await sha256(newPw);
-    const newCfg  = { ...adminCfg, passwordHash: newHash };
+    const salt    = randomSaltHex();
+    const newHash = await pbkdf2Hex(newPw, salt, PBKDF2_ITERATIONS);
+    const newCfg  = { ...adminCfg, passwordHash: newHash, salt, iterations: PBKDF2_ITERATIONS };
     const bytes   = new TextEncoder().encode(JSON.stringify(newCfg, null, 2));
     let   binary  = '';
     bytes.forEach(b => binary += String.fromCharCode(b));
