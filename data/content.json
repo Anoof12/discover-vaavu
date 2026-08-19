@@ -2,7 +2,7 @@
   "hero": {
     "tagline": "Welcome to",
     "title": "Discover Vaavu",
-    "subtitle": "Islandbreak Excursion · V. Fulidhoo, Maldives",
+    "subtitle": "Islandbreak Excursion Â· V. Fulidhoo, Maldives",
     "description": "Dive into the crystal-clear waters of Vaavu Atoll. Experience the magic of the Indian Ocean aboard our vessel Jasmine."
   },
   "stats": {
@@ -12,7 +12,7 @@
     "experience": 8
   },
   "about": {
-    "body1": "Discover Vaavu is the excursion arm of Island Break Guest House, nestled on the beautiful island of Fulidhoo in Vaavu Atoll. We bring you the finest ocean adventures the Maldives has to offer — from swimming with whale sharks to watching dolphins dance at sunset.",
+    "body1": "Discover Vaavu is the excursion arm of Island Break Guest House, nestled on the beautiful island of Fulidhoo in Vaavu Atoll. We bring you the finest ocean adventures the Maldives has to offer â from swimming with whale sharks to watching dolphins dance at sunset.",
     "body2": "Our boat Jasmine is your gateway to Vaavu's pristine reefs, hidden sandbars, and abundant marine life. Every trip is crafted to give you an authentic, unforgettable Maldivian experience."
   },
   "excursions": [
@@ -20,11 +20,16 @@
       "id": "sharkpoint",
       "title": "Shark Point",
       "category": "wildlife",
-      "images": ["assets/g1-stingrays.jpg", "assets/g6-reef.jpg"],
-      "tags": ["Shark Experience", "Half Day"],
+      "tags": [
+        "Shark Experience",
+        "Half Day"
+      ],
+      "images": [
+        "assets/g1-stingrays.jpg"
+      ],
       "shortDesc": "Snorkel alongside black tip reef sharks and eagle rays at Fulidhoo's famous Shark Point.",
-      "fullDesc": "Shark Point is one of Vaavu Atoll's most thrilling snorkel spots — a shallow lagoon where black tip reef sharks and eagle rays glide effortlessly through crystal-clear water. Our guides know exactly when and where to find them for an unforgettable encounter.",
-      "duration": "30–60 mins snorkel",
+      "fullDesc": "Shark Point is one of Vaavu Atoll's most thrilling snorkel spots â a shallow lagoon where black tip reef sharks and eagle rays glide effortlessly through crystal-clear water. Our guides know exactly when and where to find them for an unforgettable encounter.",
+      "duration": "30â60 mins snorkel",
       "timing": "Morning",
       "extraMeta": "",
       "includes": [
@@ -34,18 +39,26 @@
         "Fresh water",
         "Safety briefing"
       ],
-      "note": "💡 Book 3 snorkel points together for a discounted combo price. Shark Point, Turtle Point and Coral Garden make a perfect half-day package.",
+      "note": "ð¡ Book 3 snorkel points together for a discounted combo price. Shark Point, Turtle Point and Coral Garden make a perfect half-day package.",
       "active": true
     },
     {
       "id": "turtlepoint",
       "title": "Turtle Point",
       "category": "wildlife",
-      "images": ["assets/g4-turtle.jpg", "assets/g1-stingrays.jpg"],
-      "tags": ["Snorkeling", "Half Day", "Full Day", "Beginner Friendly"],
+      "images": [
+        "assets/g4-turtle.jpg",
+        "assets/g1-stingrays.jpg"
+      ],
+      "tags": [
+        "Snorkeling",
+        "Half Day",
+        "Full Day",
+        "Beginner Friendly"
+      ],
       "shortDesc": "Swim with resident sea turtles at their favourite feeding grounds in Fulidhoo's house reef.",
-      "fullDesc": "Fulidhoo is home to a resident population of green and hawksbill sea turtles that frequent the reef daily. At Turtle Point you'll glide alongside these graceful creatures in their natural habitat — one of the most magical encounters the Maldives has to offer.",
-      "duration": "30–60 mins snorkel",
+      "fullDesc": "Fulidhoo is home to a resident population of green and hawksbill sea turtles that frequent the reef daily. At Turtle Point you'll glide alongside these graceful creatures in their natural habitat â one of the most magical encounters the Maldives has to offer.",
+      "duration": "30â60 mins snorkel",
       "timing": "Morning / Afternoon",
       "extraMeta": "",
       "includes": [
@@ -54,17 +67,23 @@
         "Fresh water",
         "Photography tips"
       ],
-      "note": "💡 Combine with Shark Point and Coral Garden for a discounted 3-point half-day trip — the best way to experience Fulidhoo's reef!",
+      "note": "ð¡ Combine with Shark Point and Coral Garden for a discounted 3-point half-day trip â the best way to experience Fulidhoo's reef!",
       "active": true
     },
     {
       "id": "dolphincruise",
       "title": "Dolphin Cruise",
       "category": "wildlife",
-      "images": ["assets/ex-dolphin.jpg", "assets/g2-dolphins.jpg"],
-      "tags": ["Dolphin Watching", "Half Day"],
+      "images": [
+        "assets/ex-dolphin.jpg",
+        "assets/g2-dolphins.jpg"
+      ],
+      "tags": [
+        "Dolphin Watching",
+        "Half Day"
+      ],
       "shortDesc": "Chase pods of wild spinner dolphins as they leap and dance in the warm waters of Vaavu Atoll.",
-      "fullDesc": "Spinner dolphins are abundant in Vaavu Atoll and are famous for their acrobatic spins and playful behaviour around boats. Join us for a thrilling cruise as we seek out pods of these beautiful animals — often dozens at a time — in their natural ocean home.",
+      "fullDesc": "Spinner dolphins are abundant in Vaavu Atoll and are famous for their acrobatic spins and playful behaviour around boats. Join us for a thrilling cruise as we seek out pods of these beautiful animals â often dozens at a time â in their natural ocean home.",
       "duration": "Half day",
       "timing": "Morning / Afternoon",
       "extraMeta": "",
@@ -74,18 +93,25 @@
         "Fresh water",
         "Photography tips"
       ],
-      "note": "⚠️ Dolphin sightings are not guaranteed — they are wild animals in their natural habitat. However, sightings are very frequent in Vaavu Atoll.",
+      "note": "â ï¸ Dolphin sightings are not guaranteed â they are wild animals in their natural habitat. However, sightings are very frequent in Vaavu Atoll.",
       "active": true
     },
     {
       "id": "coralgarden",
       "title": "Coral Garden Snorkelling",
       "category": "water",
-      "images": ["assets/ex-snorkel.jpg", "assets/g6-reef.jpg"],
-      "tags": ["Snorkeling", "Half Day", "Beginner Friendly"],
+      "images": [
+        "assets/ex-snorkel.jpg",
+        "assets/g6-reef.jpg"
+      ],
+      "tags": [
+        "Snorkeling",
+        "Half Day",
+        "Beginner Friendly"
+      ],
       "shortDesc": "Explore a breathtaking coral garden bursting with colourful reef fish, turtles, and marine life.",
-      "fullDesc": "The Coral Garden is one of Fulidhoo's most beautiful snorkel spots — a vast, vibrant reef system teeming with hundreds of reef fish species, moray eels, octopus, and resident sea turtles. Perfect for all levels, this is the quintessential Maldivian snorkelling experience.",
-      "duration": "30–60 mins snorkel",
+      "fullDesc": "The Coral Garden is one of Fulidhoo's most beautiful snorkel spots â a vast, vibrant reef system teeming with hundreds of reef fish species, moray eels, octopus, and resident sea turtles. Perfect for all levels, this is the quintessential Maldivian snorkelling experience.",
+      "duration": "30â60 mins snorkel",
       "timing": "All day",
       "extraMeta": "",
       "includes": [
@@ -93,18 +119,24 @@
         "Reef guide",
         "Fresh water"
       ],
-      "note": "💡 Combine with Shark Point and Turtle Point for a discounted 3-point package — the perfect introduction to Fulidhoo's incredible reef system.",
+      "note": "ð¡ Combine with Shark Point and Turtle Point for a discounted 3-point package â the perfect introduction to Fulidhoo's incredible reef system.",
       "active": true
     },
     {
       "id": "leopardshark",
       "title": "Leopard Shark",
       "category": "wildlife",
-      "images": ["assets/g6-reef.jpg", "assets/g1-stingrays.jpg"],
-      "tags": ["Snorkeling", "Half Day"],
+      "images": [
+        "assets/g6-reef.jpg",
+        "assets/g1-stingrays.jpg"
+      ],
+      "tags": [
+        "Snorkeling",
+        "Half Day"
+      ],
       "shortDesc": "Search for the beautiful leopard shark resting on the sandy seafloor of Vaavu Atoll.",
-      "fullDesc": "The leopard shark is one of the Maldives' most striking reef creatures — docile, spotted, and stunning up close. Our guides know the best spots where these incredible animals rest on the sandy bottom, making for an extraordinary snorkelling experience.",
-      "duration": "30–60 mins snorkel",
+      "fullDesc": "The leopard shark is one of the Maldives' most striking reef creatures â docile, spotted, and stunning up close. Our guides know the best spots where these incredible animals rest on the sandy bottom, making for an extraordinary snorkelling experience.",
+      "duration": "30â60 mins snorkel",
       "timing": "Morning",
       "extraMeta": "",
       "includes": [
@@ -113,17 +145,23 @@
         "Expert spotter guide",
         "Fresh water"
       ],
-      "note": "⚠️ Leopard shark sightings are not guaranteed — they are wild animals. However, our guides know their favourite spots and sightings are common.",
+      "note": "â ï¸ Leopard shark sightings are not guaranteed â they are wild animals. However, our guides know their favourite spots and sightings are common.",
       "active": true
     },
     {
       "id": "manta",
       "title": "Manta Ray",
       "category": "wildlife",
-      "images": ["assets/ex-manta.jpg", "assets/g6-reef.jpg"],
-      "tags": ["Snorkeling", "Half Day"],
+      "images": [
+        "assets/ex-manta.jpg",
+        "assets/g6-reef.jpg"
+      ],
+      "tags": [
+        "Snorkeling",
+        "Half Day"
+      ],
       "shortDesc": "Snorkel with majestic manta rays at world-famous feeding grounds in the heart of Vaavu Atoll.",
-      "fullDesc": "Vaavu Atoll is one of the world's premier manta ray destinations. Our guides take you to the famous spots where mantas gather to feed — you'll be just metres away from these magnificent creatures as they soar effortlessly through the deep blue.",
+      "fullDesc": "Vaavu Atoll is one of the world's premier manta ray destinations. Our guides take you to the famous spots where mantas gather to feed â you'll be just metres away from these magnificent creatures as they soar effortlessly through the deep blue.",
       "duration": "Half day",
       "timing": "Seasonal",
       "extraMeta": "",
@@ -134,18 +172,23 @@
         "Fresh water",
         "Light refreshments"
       ],
-      "note": "⚠️ Manta ray encounters are not guaranteed — they are seasonal wild animals. Best from November to May. When present, the experience is truly world-class.",
+      "note": "â ï¸ Manta ray encounters are not guaranteed â they are seasonal wild animals. Best from November to May. When present, the experience is truly world-class.",
       "active": true
     },
     {
       "id": "whaleshark",
       "title": "Whale Shark",
       "category": "wildlife",
-      "images": ["assets/ex-whaleshark.jpg", "assets/g5-whaleshark.png"],
-      "tags": ["Best Seller"],
+      "images": [
+        "assets/ex-whaleshark.jpg",
+        "assets/g5-whaleshark.png"
+      ],
+      "tags": [
+        "Best Seller"
+      ],
       "shortDesc": "Swim alongside the ocean's gentle giants in one of the world's most incredible wildlife encounters.",
-      "fullDesc": "Fulidhoo is one of the Maldives' most reliable locations to encounter whale sharks. These gentle giants — the largest fish in the ocean — are completely harmless and utterly breathtaking. We travel far into the atoll to find them, so the duration of this trip varies. When you're in the water beside one, time stands still.",
-      "duration": "Variable — we travel far to find them",
+      "fullDesc": "Fulidhoo is one of the Maldives' most reliable locations to encounter whale sharks. These gentle giants â the largest fish in the ocean â are completely harmless and utterly breathtaking. We travel far into the atoll to find them, so the duration of this trip varies. When you're in the water beside one, time stands still.",
+      "duration": "Variable â we travel far to find them",
       "timing": "Morning",
       "extraMeta": "",
       "includes": [
@@ -156,17 +199,23 @@
         "Expert marine guide",
         "Safety briefing"
       ],
-      "note": "⚠️ Whale shark sightings are not guaranteed — they are wild, free-roaming animals. Minimum 10 guests required. We follow strict eco-guidelines: no touching, no flash photography.",
+      "note": "â ï¸ Whale shark sightings are not guaranteed â they are wild, free-roaming animals. Minimum 10 guests required. We follow strict eco-guidelines: no touching, no flash photography.",
       "active": true
     },
     {
       "id": "sandbank",
       "title": "Sandbank",
       "category": "scenic",
-      "images": ["assets/g3-sandbank.jpg", "assets/ex-sandbank.jpg"],
-      "tags": ["Half Day", "Family Friendly"],
-      "shortDesc": "Step onto a pristine white sandbank rising from the turquoise ocean — your own private paradise.",
-      "fullDesc": "There are few things more magical than standing on a deserted sandbank in the middle of the Indian Ocean. We take you to a beautiful sandbar in Vaavu Atoll for 1 hour of swimming, relaxing, and pure bliss. Want to stay longer? No problem — just let us know and we can arrange an extended visit.",
+      "images": [
+        "assets/g3-sandbank.jpg",
+        "assets/ex-sandbank.jpg"
+      ],
+      "tags": [
+        "Half Day",
+        "Family Friendly"
+      ],
+      "shortDesc": "Step onto a pristine white sandbank rising from the turquoise ocean â your own private paradise.",
+      "fullDesc": "There are few things more magical than standing on a deserted sandbank in the middle of the Indian Ocean. We take you to a beautiful sandbar in Vaavu Atoll for 1 hour of swimming, relaxing, and pure bliss. Want to stay longer? No problem â just let us know and we can arrange an extended visit.",
       "duration": "1 hour on sandbank",
       "timing": "Daytime",
       "extraMeta": "",
@@ -177,16 +226,22 @@
         "Sunshade & towels",
         "Fresh water"
       ],
-      "note": "🏖️ Standard visit is 1 hour. Extended stays are available at an additional cost. Can also be combined as part of a full-day trip with Picnic Island.",
+      "note": "ðï¸ Standard visit is 1 hour. Extended stays are available at an additional cost. Can also be combined as part of a full-day trip with Picnic Island.",
       "active": true
     },
     {
       "id": "picnicisland",
       "title": "Picnic Island",
       "category": "scenic",
-      "images": ["assets/ex-islandhop.jpg", "assets/ex-sunset.jpg"],
-      "tags": ["Full Day", "Family Friendly"],
-      "shortDesc": "Spend a magical full day on a deserted Maldivian island — beach, snorkelling, picnic, and pure bliss.",
+      "images": [
+        "assets/ex-islandhop.jpg",
+        "assets/ex-sunset.jpg"
+      ],
+      "tags": [
+        "Full Day",
+        "Family Friendly"
+      ],
+      "shortDesc": "Spend a magical full day on a deserted Maldivian island â beach, snorkelling, picnic, and pure bliss.",
       "fullDesc": "Escape to a beautiful uninhabited island in Vaavu Atoll for an unforgettable full-day adventure. Explore the island, snorkel the surrounding reef, swim in the crystal lagoon, and enjoy a fresh picnic spread under the shade of palm trees. Can be combined with a Sandbank visit for the ultimate full-day experience.",
       "duration": "Full day",
       "timing": "Daytime",
@@ -199,18 +254,24 @@
         "Sunshade & towels",
         "Island exploration"
       ],
-      "note": "🌴 Can be combined with a Sandbank visit for the perfect full-day trip. Contact us for a quote tailored to your group.",
+      "note": "ð´ Can be combined with a Sandbank visit for the perfect full-day trip. Contact us for a quote tailored to your group.",
       "active": true
     },
     {
       "id": "3-point",
       "title": "3 Point",
       "category": "wildlife",
-      "images": ["assets/ex-3-point.jpg", "assets/g6-reef.jpg"],
-      "tags": ["Snorkeling", "Best Seller"],
+      "images": [
+        "assets/ex-3-point.jpg",
+        "assets/g6-reef.jpg"
+      ],
+      "tags": [
+        "Snorkeling",
+        "Best Seller"
+      ],
       "shortDesc": "Choose any 3 excursions from Coral Garden Snorkeling, Dolphin Watching, Manta Ray Watching, and Leopard Shark Watching for an unforgettable Maldivian adventure.",
       "fullDesc": "Experience the best of the Maldives with a customized island adventure. Choose any three excursions from a range of exciting options, including Coral Garden Snorkeling, Dolphin Watching, Manta Ray Watching, and Leopard Shark Watching. Explore vibrant coral reefs, encounter majestic marine life, and create unforgettable memories in the crystal-clear waters of the Indian Ocean.",
-      "duration": "1–2 hours",
+      "duration": "1â2 hours",
       "timing": "Morning",
       "extraMeta": "Snacks included",
       "includes": [
@@ -225,10 +286,17 @@
       "id": "resortdaytrip",
       "title": "Resort Day Trip",
       "category": "scenic",
-      "images": ["assets/fulidhoo-hero.jpg", "assets/hero-bg.jpg"],
-      "tags": ["Resort Day Trip", "Full Day", "Family Friendly"],
-      "shortDesc": "Spend the day at a nearby luxury resort — pool, beach, and resort facilities before returning to Fulidhoo.",
-      "fullDesc": "Trade island life for a day of resort luxury. We take you by boat to a nearby Vaavu Atoll resort island, where you can relax by the pool, unwind on a manicured beach, and enjoy the resort's facilities and dining, before a scenic return cruise back to Fulidhoo at sunset. A relaxed alternative to our wildlife and snorkelling trips, perfect for guests who want a slower-paced day on the water. [Placeholder listing — photos and final details to be added by Discover Vaavu.]",
+      "images": [
+        "assets/fulidhoo-hero.jpg",
+        "assets/hero-bg.jpg"
+      ],
+      "tags": [
+        "Resort Day Trip",
+        "Full Day",
+        "Family Friendly"
+      ],
+      "shortDesc": "Spend the day at a nearby luxury resort â pool, beach, and resort facilities before returning to Fulidhoo.",
+      "fullDesc": "Trade island life for a day of resort luxury. We take you by boat to a nearby Vaavu Atoll resort island, where you can relax by the pool, unwind on a manicured beach, and enjoy the resort's facilities and dining, before a scenic return cruise back to Fulidhoo at sunset. A relaxed alternative to our wildlife and snorkelling trips, perfect for guests who want a slower-paced day on the water. [Placeholder listing â photos and final details to be added by Discover Vaavu.]",
       "duration": "Full day",
       "timing": "Daytime",
       "extraMeta": "",
@@ -238,7 +306,7 @@
         "Sunshade & towels",
         "Fresh water"
       ],
-      "note": "🏝️ Resort access and inclusions vary by partner resort and season — contact us for current availability and details.",
+      "note": "ðï¸ Resort access and inclusions vary by partner resort and season â contact us for current availability and details.",
       "active": true
     }
   ],
@@ -256,7 +324,7 @@
       "name": "Marco Rossi",
       "country": "Italy",
       "rating": 5,
-      "text": "The Coral Garden snorkel was incredible — so much marine life in one spot. The crew on Jasmine were friendly and clearly knew every inch of the reef. Highly recommend Discover Vaavu.",
+      "text": "The Coral Garden snorkel was incredible â so much marine life in one spot. The crew on Jasmine were friendly and clearly knew every inch of the reef. Highly recommend Discover Vaavu.",
       "photo": ""
     },
     {
@@ -272,7 +340,7 @@
       "name": "Liam O'Connor",
       "country": "Ireland",
       "rating": 4,
-      "text": "Great dolphin cruise — saw a huge pod jumping around the boat. Booking via WhatsApp was quick and easy, and the team was very responsive throughout our stay in Fulidhoo.",
+      "text": "Great dolphin cruise â saw a huge pod jumping around the boat. Booking via WhatsApp was quick and easy, and the team was very responsive throughout our stay in Fulidhoo.",
       "photo": ""
     }
   ],
@@ -281,7 +349,7 @@
     "phone": "+960 9822231",
     "whatsapp": "+960 9822231",
     "email": "discovervaavureservation@gmail.com",
-    "hours": "Daily · Sunrise to Sunset",
+    "hours": "Daily Â· Sunrise to Sunset",
     "facebook": "https://www.facebook.com/islandbreakMaldives",
     "instagram": "https://www.instagram.com/discovervaavu/",
     "wechat": "DiscoverVaavu"
