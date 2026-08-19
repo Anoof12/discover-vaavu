@@ -333,37 +333,6 @@
       ],
       "note": "ÃÂ°ÃÂÃÂÃÂÃÂ¯ÃÂ¸ÃÂ Resort access and inclusions vary by partner resort and season ÃÂ¢ÃÂÃÂ contact us for current availability and details.",
       "active": true
-    },
-    {
-      "id": "manta-snorkelling",
-      "title": "Manta snorkelling",
-      "category": "wildlife",
-      "tags": [
-        "Best Seller",
-        "Family Friendly",
-        "Snorkeling",
-        "Half Day",
-        "Beginner Friendly"
-      ],
-      "images": [
-        "assets/ex-manta-snorkelling-1787158777361.jpeg",
-        "assets/ex-manta-snorkelling-1787158784774.jpeg",
-        "assets/ex-manta-snorkelling-1787158791350.jpeg",
-        "assets/ex-manta-snorkelling-1787158823425.jpeg",
-        "assets/ex-manta-snorkelling-1787158868698.jpeg"
-      ],
-      "shortDesc": "",
-      "fullDesc": "",
-      "duration": "30 minutes",
-      "timing": "Morning /afternoon",
-      "extraMeta": "",
-      "includes": [
-        "Snorkelling mask,fins",
-        "Fresh water",
-        "Safety briefing"
-      ],
-      "note": "Best from aprill till November",
-      "active": true
     }
   ],
   "reviews": [
