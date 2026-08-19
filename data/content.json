@@ -21,8 +21,12 @@
       "title": "Shark Point",
       "category": "wildlife",
       "tags": [
+        "Best Seller",
+        "Family Friendly",
+        "Snorkeling",
         "Shark Experience",
-        "Half Day"
+        "Half Day",
+        "Beginner Friendly"
       ],
       "images": [
         "assets/ex-sharkpoint-1787155394162.jpeg",
@@ -49,15 +53,17 @@
       "id": "turtlepoint",
       "title": "Turtle Point",
       "category": "wildlife",
-      "images": [
-        "assets/g4-turtle.jpg",
-        "assets/g1-stingrays.jpg"
-      ],
       "tags": [
+        "Best Seller",
+        "Family Friendly",
         "Snorkeling",
         "Half Day",
-        "Full Day",
         "Beginner Friendly"
+      ],
+      "images": [
+        "assets/ex-turtlepoint-1787155872885.jpeg",
+        "assets/ex-turtlepoint-1787155922264.jpeg",
+        "assets/ex-turtlepoint-1787155965789.jpeg"
       ],
       "shortDesc": "Swim with resident sea turtles at their favourite feeding grounds in Fulidhoo's house reef.",
       "fullDesc": "Fulidhoo is home to a resident population of green and hawksbill sea turtles that frequent the reef daily. At Turtle Point you'll glide alongside these graceful creatures in their natural habitat Ã¢ÂÂ one of the most magical encounters the Maldives has to offer.",
@@ -68,7 +74,7 @@
         "Snorkel mask, fins & vest",
         "Local reef guide",
         "Fresh water",
-        "Photography tips"
+        "Photography or videography"
       ],
       "note": "Ã°ÂÂÂ¡ Combine with Shark Point and Coral Garden for a discounted 3-point half-day trip Ã¢ÂÂ the best way to experience Fulidhoo's reef!",
       "active": true
