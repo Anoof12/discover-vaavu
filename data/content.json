@@ -83,13 +83,19 @@
       "id": "dolphincruise",
       "title": "Dolphin Cruise",
       "category": "wildlife",
+      "tags": [
+        "Best Seller",
+        "Family Friendly",
+        "Snorkeling",
+        "Dolphin Watching",
+        "Half Day",
+        "Beginner Friendly"
+      ],
       "images": [
         "assets/ex-dolphin.jpg",
-        "assets/g2-dolphins.jpg"
-      ],
-      "tags": [
-        "Dolphin Watching",
-        "Half Day"
+        "assets/ex-dolphincruise-1787231884133.jpeg",
+        "assets/ex-dolphincruise-1787231919372.jpeg",
+        "assets/ex-dolphincruise-1787231939199.jpeg"
       ],
       "shortDesc": "Chase pods of wild spinner dolphins as they leap and dance in the warm waters of Vaavu Atoll.",
       "fullDesc": "Spinner dolphins are abundant in Vaavu Atoll and are famous for their acrobatic spins and playful behaviour around boats. Join us for a thrilling cruise as we seek out pods of these beautiful animals ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ often dozens at a time ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ in their natural ocean home.",
@@ -98,9 +104,7 @@
       "extraMeta": "",
       "includes": [
         "Cruise aboard Jasmine",
-        "Expert local guide",
-        "Fresh water",
-        "Photography tips"
+        "Fresh water"
       ],
       "note": "ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ ÃÂÃÂ¯ÃÂÃÂ¸ÃÂÃÂ Dolphin sightings are not guaranteed ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ they are wild animals in their natural habitat. However, sightings are very frequent in Vaavu Atoll.",
       "active": true
@@ -148,7 +152,8 @@
       ],
       "images": [
         "assets/ex-leopardshark-1787159004037.jpeg",
-        "assets/ex-leopardshark-1787159019418.jpeg"
+        "assets/ex-leopardshark-1787159019418.jpeg",
+        "assets/ex-leopardshark-1787232009503.jpeg"
       ],
       "shortDesc": "Search for the beautiful leopard shark resting on the sandy seafloor of Vaavu Atoll.",
       "fullDesc": "The leopard shark is one of the Maldives' most striking reef creatures ÃÂÃÂ¢ÃÂÃÂÃÂÃÂ docile, spotted, and stunning up close. Our guides know the best spots where these incredible animals rest on the sandy bottom, making for an extraordinary snorkelling experience.",
