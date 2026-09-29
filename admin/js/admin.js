@@ -306,6 +306,7 @@ function initImageUploader({ pickBtnId, fileInputId, statusId, thumbId, onSucces
 function populateForms() {
   if (!siteData) return;
   if (!siteData.reviews) siteData.reviews = [];
+  if (!siteData.gallery) siteData.gallery = [];
   const { hero, stats, about, excursions, contact } = siteData;
 
   setVal('heroTagline',    hero.tagline);
@@ -334,6 +335,7 @@ function populateForms() {
     excursions.filter(e => e.active !== false).length;
 
   renderExcursionList();
+  renderGalleryList();
   renderReviewList();
 }
 
@@ -601,6 +603,152 @@ function deleteExcursion(idx) {
   siteData.excursions.splice(idx, 1);
   renderExcursionList();
   toast('Excursion deleted — click Publish to go live', 'ok');
+}
+
+/* ══════════════════════════════════════════
+   GALLERY
+══════════════════════════════════════════ */
+function renderGalleryList() {
+  const list = document.getElementById('galleryList');
+  if (!list || !siteData) return;
+  list.innerHTML = '';
+
+  const gallery = siteData.gallery || [];
+  const sizeLabel = { tall: 'Tall', wide: 'Wide' };
+
+  gallery.forEach((g, idx) => {
+    const card = document.createElement('div');
+    card.className = 'ex-admin-card';
+    card.innerHTML = `
+      <div class="ex-admin-thumb" style="background-image:url('${adminImg(g.image)}')"></div>
+      <div class="ex-admin-info">
+        <h4>${g.label || '(no caption)'}</h4>
+        <div class="ex-admin-meta">
+          <span class="ex-meta-tag">${sizeLabel[g.size] || 'Normal'}</span>
+        </div>
+      </div>
+      <div class="ex-admin-actions">
+        <button class="btn-move-ex" data-idx="${idx}" data-dir="-1" title="Move up" ${idx === 0 ? 'disabled' : ''}>↑</button>
+        <button class="btn-move-ex" data-idx="${idx}" data-dir="1"  title="Move down" ${idx === gallery.length - 1 ? 'disabled' : ''}>↓</button>
+        <button class="btn-edit-ex" data-idx="${idx}">Edit</button>
+        <button class="btn-del-ex"  data-idx="${idx}">Delete</button>
+      </div>`;
+    list.appendChild(card);
+  });
+
+  list.querySelectorAll('.btn-edit-ex').forEach(b =>
+    b.addEventListener('click', () => openGalleryDrawer(+b.dataset.idx))
+  );
+  list.querySelectorAll('.btn-del-ex').forEach(b =>
+    b.addEventListener('click', () => deleteGalleryItem(+b.dataset.idx))
+  );
+  list.querySelectorAll('.btn-move-ex').forEach(b =>
+    b.addEventListener('click', () => moveGalleryItem(+b.dataset.idx, +b.dataset.dir))
+  );
+}
+
+function moveGalleryItem(idx, dir) {
+  const gallery = siteData.gallery;
+  const target = idx + dir;
+  if (target < 0 || target >= gallery.length) return;
+  [gallery[idx], gallery[target]] = [gallery[target], gallery[idx]];
+  renderGalleryList();
+  toast('Reordered — click Publish to go live', 'ok');
+}
+
+let editingGalleryIdx = null;
+
+document.getElementById('addGalleryBtn').addEventListener('click', () => openGalleryDrawer(null));
+document.getElementById('galleryDrawerClose').addEventListener('click',    closeGalleryDrawer);
+document.getElementById('galleryDrawerCancel').addEventListener('click',   closeGalleryDrawer);
+document.getElementById('galleryDrawerOverlay').addEventListener('click',  closeGalleryDrawer);
+
+initImageUploader({
+  pickBtnId:   'galPickBtn',
+  fileInputId: 'galImageFile',
+  statusId:    'galUploadStatus',
+  thumbId:     'galImgPreview',
+  repoPathFn:  (ext) => {
+    const id = document.getElementById('galId').value.trim()
+              || slugify(document.getElementById('galLabel').value.trim())
+              || 'photo';
+    return `assets/gallery-${id}-${Date.now()}.${ext}`;
+  },
+  onSuccess: (path) => {
+    document.getElementById('galImage').value = path;
+  }
+});
+
+function openGalleryDrawer(idx) {
+  editingGalleryIdx = idx;
+  document.getElementById('galleryDrawerTitle').textContent = idx === null ? 'Add Photo' : 'Edit Photo';
+
+  const thumb  = document.getElementById('galImgPreview');
+  const status = document.getElementById('galUploadStatus');
+
+  if (idx !== null) {
+    const g = siteData.gallery[idx];
+    setVal('galId',    g.id);
+    setVal('galLabel', g.label);
+    setVal('galImage', g.image);
+    setVal('galSize',  g.size || 'normal');
+    if (g.image) {
+      thumb.style.backgroundImage = `url('${adminImg(g.image)}')`;
+      status.className = 'upload-status done';
+      status.textContent = `Current: ${g.image.split('/').pop()}`;
+    } else {
+      thumb.style.backgroundImage = '';
+      status.className = 'upload-status';
+      status.textContent = 'No photo selected';
+    }
+  } else {
+    ['galId','galLabel','galImage'].forEach(id => setVal(id, ''));
+    setVal('galSize', 'normal');
+    thumb.style.backgroundImage = '';
+    status.className = 'upload-status';
+    status.textContent = 'No photo selected';
+  }
+
+  document.getElementById('galleryDrawerOverlay').classList.add('open');
+  document.getElementById('galleryDrawer').classList.add('open');
+}
+
+function closeGalleryDrawer() {
+  document.getElementById('galleryDrawerOverlay').classList.remove('open');
+  document.getElementById('galleryDrawer').classList.remove('open');
+  editingGalleryIdx = null;
+}
+
+document.getElementById('galleryDrawerSave').addEventListener('click', () => {
+  const label = document.getElementById('galLabel').value.trim();
+  const image = document.getElementById('galImage').value.trim();
+  if (!image) { toast('Choose a photo first', 'err'); return; }
+
+  const g = {
+    id:    document.getElementById('galId').value.trim() || slugify(label || 'photo') + '-' + Date.now(),
+    image,
+    label,
+    size:  document.getElementById('galSize').value
+  };
+
+  if (!siteData.gallery) siteData.gallery = [];
+  if (editingGalleryIdx === null) {
+    siteData.gallery.push(g);
+    toast('✓ Photo added — click Publish to go live', 'ok');
+  } else {
+    siteData.gallery[editingGalleryIdx] = g;
+    toast('✓ Photo updated — click Publish to go live', 'ok');
+  }
+
+  renderGalleryList();
+  closeGalleryDrawer();
+});
+
+function deleteGalleryItem(idx) {
+  if (!confirm(`Remove "${siteData.gallery[idx].label || 'this photo'}" from the gallery?`)) return;
+  siteData.gallery.splice(idx, 1);
+  renderGalleryList();
+  toast('Photo removed — click Publish to go live', 'ok');
 }
 
 /* ══════════════════════════════════════════
@@ -916,7 +1064,7 @@ function switchSection(name) {
   document.querySelector(`.nav-item[data-section="${name}"]`)?.classList.add('active');
   const titles = {
     dashboard: 'Dashboard', hero: 'Hero Section', stats: 'Stats',
-    about: 'About', excursions: 'Excursions', reviews: 'Reviews',
+    about: 'About', excursions: 'Excursions', gallery: 'Gallery', reviews: 'Reviews',
     contact: 'Contact Info', settings: 'Settings'
   };
   document.getElementById('topbarTitle').textContent = titles[name] || name;
@@ -981,6 +1129,7 @@ function defaultContent() {
     stats: { guests: 500, excursionTypes: 9, satisfaction: 100, experience: 5 },
     about: { body1: '', body2: '' },
     excursions: [],
+    gallery: [],
     reviews: [],
     contact: { address: '', phone: '', whatsapp: '', email: '', hours: '', facebook: '#', instagram: '#', wechat: '' }
   };

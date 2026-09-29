@@ -61,6 +61,9 @@
       <a href="#" class="nav-item" data-section="excursions">
         <span class="nav-icon">🛥️</span><span>Excursions</span>
       </a>
+      <a href="#" class="nav-item" data-section="gallery">
+        <span class="nav-icon">🖼️</span><span>Gallery</span>
+      </a>
       <a href="#" class="nav-item" data-section="reviews">
         <span class="nav-icon">⭐</span><span>Reviews</span>
       </a>
@@ -240,6 +243,20 @@
         <button class="btn-add-ex" id="addExcursionBtn">+ Add Excursion</button>
       </div>
       <div class="excursion-list" id="excursionList">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <!-- ── Gallery ── -->
+    <section class="admin-section hidden" id="sec-gallery">
+      <div class="section-head">
+        <div>
+          <h2>Gallery</h2>
+          <p>Manage the photos shown in "The Ocean Gallery" section. Order here is the order shown on the site.</p>
+        </div>
+        <button class="btn-add-ex" id="addGalleryBtn">+ Add Photo</button>
+      </div>
+      <div class="excursion-list" id="galleryList">
         <!-- Populated by JS -->
       </div>
     </section>
@@ -506,6 +523,50 @@
   <div class="drawer-footer">
     <button class="btn-cancel" id="reviewDrawerCancel">Cancel</button>
     <button class="btn-save-drawer" id="reviewDrawerSave">Save Review</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     GALLERY EDITOR DRAWER
+════════════════════════════════════ -->
+<div class="drawer-overlay" id="galleryDrawerOverlay"></div>
+<div class="drawer" id="galleryDrawer">
+  <div class="drawer-head">
+    <h3 id="galleryDrawerTitle">Add Photo</h3>
+    <button class="drawer-close" id="galleryDrawerClose">✕</button>
+  </div>
+  <div class="drawer-body">
+    <input type="hidden" id="galId" />
+    <div class="form-group">
+      <label>Caption <small>(shown over the photo on the site)</small></label>
+      <input type="text" id="galLabel" placeholder="e.g. Spinner Dolphins" />
+    </div>
+    <div class="form-group">
+      <label>Photo</label>
+      <div class="upload-zone" id="galUploadZone">
+        <div class="upload-thumb" id="galImgPreview"></div>
+        <div class="upload-info">
+          <span class="upload-status" id="galUploadStatus">No photo selected</span>
+          <div class="upload-btns">
+            <button type="button" class="btn-upload" id="galPickBtn">📁 Choose Photo</button>
+          </div>
+        </div>
+      </div>
+      <input type="file"   id="galImageFile" accept="image/*" hidden />
+      <input type="hidden" id="galImage" />
+    </div>
+    <div class="form-group">
+      <label>Size in Grid</label>
+      <select id="galSize">
+        <option value="normal">Normal</option>
+        <option value="tall">Tall (spans 2 rows)</option>
+        <option value="wide">Wide (spans 2 columns)</option>
+      </select>
+    </div>
+  </div>
+  <div class="drawer-footer">
+    <button class="btn-cancel" id="galleryDrawerCancel">Cancel</button>
+    <button class="btn-save-drawer" id="galleryDrawerSave">Save Photo</button>
   </div>
 </div>
 

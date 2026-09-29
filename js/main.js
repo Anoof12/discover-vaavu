@@ -232,6 +232,20 @@ function renderExcursions(excursions, contact) {
   initReveal();
 }
 
+/* ── Render Gallery ── */
+function renderGallery(gallery) {
+  const grid = document.getElementById('galleryMasonry');
+  if (!grid) return;
+  grid.innerHTML = gallery.map(g => {
+    const sizeClass = g.size === 'tall' ? ' tall' : g.size === 'wide' ? ' wide' : '';
+    return `
+      <div class="gal-item${sizeClass}" data-reveal>
+        <div class="gal-img" style="background-image:url('${g.image}')" role="img" aria-label="${g.label || ''}"></div>
+        <div class="gal-label">${g.label || ''}</div>
+      </div>`;
+  }).join('');
+}
+
 /* ── Filter tabs ── */
 function attachFilterListeners() {
   const filterBtns = document.querySelectorAll('.filter-btn');
@@ -405,6 +419,7 @@ async function boot() {
   populateAbout(data.about);
   populateContact(data.contact);
   renderExcursions(data.excursions, data.contact);
+  renderGallery(data.gallery || []);
   initReviews(data.reviews || []);
   initStats(data);
   initReveal();
@@ -427,6 +442,7 @@ function getDefaults() {
       body2: 'Our boat Jasmine is your gateway to Vaavu\'s pristine reefs, hidden sandbars, and abundant marine life.'
     },
     excursions: [],
+    gallery: [],
     reviews: [],
     contact: {
       address: 'V. Fulidhoo, Vaavu Atoll, Maldives',
