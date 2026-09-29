@@ -361,6 +361,14 @@ small { font-size: 0.75rem; color: var(--text-sm); }
 .btn-del-ex  { background: rgba(239,68,68,0.1); color: #f87171; }
 .btn-del-ex:hover  { background: rgba(239,68,68,0.22); }
 
+.btn-move-ex {
+  padding: 7px 10px; border-radius: 7px; font-size: 0.8rem;
+  font-weight: 600; cursor: pointer; border: none; transition: all var(--trans);
+  background: var(--surface2); color: var(--text);
+}
+.btn-move-ex:hover:not(:disabled) { background: rgba(14,154,167,0.2); color: var(--teal-lt); }
+.btn-move-ex:disabled { opacity: 0.3; cursor: default; }
+
 /* Drag handle */
 .drag-handle {
   cursor: grab; color: var(--text-sm); font-size: 1.1rem; flex-shrink: 0;

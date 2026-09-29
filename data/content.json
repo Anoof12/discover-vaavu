@@ -372,6 +372,14 @@
       "active": true
     }
   ],
+  "gallery": [
+    { "id": "stingrays-sharks", "image": "assets/g1-stingrays.jpg", "label": "Stingrays & Sharks", "size": "tall" },
+    { "id": "spinner-dolphins", "image": "assets/g2-dolphins.jpg", "label": "Spinner Dolphins", "size": "normal" },
+    { "id": "sandbank-bliss", "image": "assets/g3-sandbank.jpg", "label": "Sandbank Bliss", "size": "normal" },
+    { "id": "sea-turtle", "image": "assets/g4-turtle.jpg", "label": "Sea Turtle", "size": "tall" },
+    { "id": "whale-shark", "image": "assets/g5-whaleshark.png", "label": "Whale Shark", "size": "wide" },
+    { "id": "reef-life", "image": "assets/g6-reef.jpg", "label": "Reef Life", "size": "normal" }
+  ],
   "reviews": [
     {
       "id": "review-1",
