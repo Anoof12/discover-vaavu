@@ -380,28 +380,10 @@
       "size": "tall"
     },
     {
-      "id": "spinner-dolphins",
-      "image": "assets/g2-dolphins.jpg",
-      "label": "Spinner Dolphins",
-      "size": "normal"
-    },
-    {
-      "id": "sea-turtle",
-      "image": "assets/g4-turtle.jpg",
-      "label": "Sea Turtle",
-      "size": "tall"
-    },
-    {
       "id": "whale-shark",
       "image": "assets/g5-whaleshark.png",
       "label": "Whale Shark",
       "size": "wide"
-    },
-    {
-      "id": "reef-life",
-      "image": "assets/g6-reef.jpg",
-      "label": "Leopard shark",
-      "size": "normal"
     },
     {
       "id": "sandbank-1790740869992",
@@ -419,6 +401,42 @@
       "id": "nurse-shark-1790741495367",
       "image": "assets/gallery-nurse-shark-1790741467220.jpeg",
       "label": "Nurse shark",
+      "size": "normal"
+    },
+    {
+      "id": "guitar-shark-1790741591962",
+      "image": "assets/gallery-photo-1790741565983.jpeg",
+      "label": "Guitar shark",
+      "size": "normal"
+    },
+    {
+      "id": "dolfriends-1790742053546",
+      "image": "assets/gallery-dolfriends-1790742043086.jpeg",
+      "label": "Dolfriends",
+      "size": "normal"
+    },
+    {
+      "id": "leopard-shark-1790742117025",
+      "image": "assets/gallery-leopard-shark-1790742111792.jpeg",
+      "label": "Leopard shark",
+      "size": "normal"
+    },
+    {
+      "id": "green-sea-turtle-1790742175574",
+      "image": "assets/gallery-green-sea-turtle-1790742161960.jpeg",
+      "label": "Green sea turtle",
+      "size": "normal"
+    },
+    {
+      "id": "hawksbill-turtle-1790742236181",
+      "image": "assets/gallery-hawksbill-turtle-1790742229033.jpeg",
+      "label": "Hawksbill turtle",
+      "size": "normal"
+    },
+    {
+      "id": "manta-1790742307082",
+      "image": "assets/gallery-manta-1790742302272.jpeg",
+      "label": "Manta",
       "size": "normal"
     }
   ],
