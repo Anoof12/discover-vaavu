@@ -386,12 +386,6 @@
       "size": "normal"
     },
     {
-      "id": "sandbank-bliss",
-      "image": "assets/g3-sandbank.jpg",
-      "label": "Desert island hoping",
-      "size": "normal"
-    },
-    {
       "id": "sea-turtle",
       "image": "assets/g4-turtle.jpg",
       "label": "Sea Turtle",
@@ -406,13 +400,25 @@
     {
       "id": "reef-life",
       "image": "assets/g6-reef.jpg",
-      "label": "Reef Life",
+      "label": "Leopard shark",
       "size": "normal"
     },
     {
       "id": "sandbank-1790740869992",
       "image": "assets/gallery-sandbank-1790740861229.jpeg",
       "label": "Sandbank",
+      "size": "normal"
+    },
+    {
+      "id": "picnic-island-1790741216112",
+      "image": "assets/gallery-dessert-island-1790741202455.jpeg",
+      "label": "Picnic island",
+      "size": "normal"
+    },
+    {
+      "id": "nurse-shark-1790741495367",
+      "image": "assets/gallery-nurse-shark-1790741467220.jpeg",
+      "label": "Nurse shark",
       "size": "normal"
     }
   ],
