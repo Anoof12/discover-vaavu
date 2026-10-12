@@ -173,7 +173,7 @@ async function fetchAdminConfig() {
     const r = await fetch(`${API}/repos/${REPO}/contents/${ADMIN_PATH}`, { headers: ghHeaders() });
     if (!r.ok) return null;
     const j = await r.json();
-    return JSON.parse(atob(j.content.replace(/\n/g, '')));
+    return JSON.parse(decodeGitHubContent(j.content));
   } catch { return null; }
 }
 
@@ -187,7 +187,7 @@ async function loadContent() {
       if (r.ok) {
         const j  = await r.json();
         fileSHA  = j.sha;
-        siteData = JSON.parse(atob(j.content.replace(/\n/g, '')));
+        siteData = JSON.parse(decodeGitHubContent(j.content));
         setStatus('success', '✓ Connected to GitHub');
         populateForms();
         return;
@@ -454,7 +454,7 @@ async function updateAboutImageInHTML(newPath) {
     const r = await fetch(`${API}/repos/${REPO}/contents/index.html`, { headers: ghHeaders() });
     if (!r.ok) return;
     const j   = await r.json();
-    const html = atob(j.content.replace(/\n/g, ''));
+    const html = decodeGitHubContent(j.content);
     const updated = html.replace(
       /(<img[^>]*class="about-img"[^>]*src=")[^"]*(")/,
       `$1${newPath}$2`
@@ -1097,6 +1097,16 @@ function ghHeaders(token) {
   const h = { Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
   if (t) h.Authorization = `Bearer ${t}`;
   return h;
+}
+
+/* GitHub's Contents API returns base64 of the file's raw UTF-8 bytes.
+   atob() alone gives a byte-per-char string, not decoded UTF-8 — any
+   emoji or special punctuation needs explicit UTF-8 decoding or every
+   save corrupts it a little further. */
+function decodeGitHubContent(base64) {
+  const binary = atob(base64.replace(/\n/g, ''));
+  const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+  return new TextDecoder('utf-8').decode(bytes);
 }
 
 function setStatus(type, text) {
