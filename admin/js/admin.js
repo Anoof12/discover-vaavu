@@ -220,6 +220,40 @@ function adminImg(path) {
 /* ══════════════════════════════════════════
    IMAGE UPLOAD TO GITHUB
 ══════════════════════════════════════════ */
+
+/* Resizes to maxDimension on the long edge and re-encodes as JPEG before
+   upload. Raw phone photos are routinely 3-7MB; uploading them straight
+   through made the live site itself that heavy. Falls back to the
+   original file if compression fails for any reason (unsupported
+   format, etc.) so an upload never hard-fails over this. */
+async function compressImage(file, maxDimension, quality = 0.82) {
+  try {
+    const bitmap = await createImageBitmap(file);
+    let { width, height } = bitmap;
+    const longEdge = Math.max(width, height);
+    if (longEdge > maxDimension) {
+      const scale = maxDimension / longEdge;
+      width = Math.round(width * scale);
+      height = Math.round(height * scale);
+    }
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(bitmap, 0, 0, width, height);
+    bitmap.close?.();
+
+    const blob = await new Promise((resolve, reject) =>
+      canvas.toBlob(b => b ? resolve(b) : reject(new Error('canvas.toBlob failed')), 'image/jpeg', quality)
+    );
+    if (blob.size >= file.size) return file; // compression didn't help, keep original
+    return new File([blob], (file.name || 'photo').replace(/\.\w+$/, '') + '.jpg', { type: 'image/jpeg' });
+  } catch (e) {
+    console.warn('Image compression skipped:', e);
+    return file;
+  }
+}
+
 async function uploadImageToGitHub(file, repoPath, statusEl, thumbEl) {
   const token = getToken();
   if (!token) throw new Error('No GitHub token — add one in Settings first');
@@ -266,8 +300,10 @@ async function uploadImageToGitHub(file, repoPath, statusEl, thumbEl) {
   return repoPath;
 }
 
-/* Helper: wire a file-pick button to an upload flow */
-function initImageUploader({ pickBtnId, fileInputId, statusId, thumbId, onSuccess, repoPathFn }) {
+/* Helper: wire a file-pick button to an upload flow.
+   maxDimension caps the long edge in pixels before upload — sized per
+   call site to how large that photo is ever actually displayed. */
+function initImageUploader({ pickBtnId, fileInputId, statusId, thumbId, onSuccess, repoPathFn, maxDimension = 1600 }) {
   const pickBtn   = document.getElementById(pickBtnId);
   const fileInput = document.getElementById(fileInputId);
   if (!pickBtn || !fileInput) return;
@@ -284,9 +320,11 @@ function initImageUploader({ pickBtnId, fileInputId, statusId, thumbId, onSucces
 
     pickBtn.disabled = true;
     try {
-      const ext      = file.name.split('.').pop().toLowerCase();
+      if (statusEl) { statusEl.className = 'upload-status uploading'; statusEl.textContent = `⟳ Compressing ${file.name}…`; }
+      const compressed = await compressImage(file, maxDimension);
+      const ext      = compressed.name.split('.').pop().toLowerCase();
       const repoPath = repoPathFn(ext);
-      const path     = await uploadImageToGitHub(file, repoPath, statusEl, thumbEl);
+      const path     = await uploadImageToGitHub(compressed, repoPath, statusEl, thumbEl);
       toast('✓ Photo uploaded! Click Publish to go live.', 'ok');
       if (onSuccess) onSuccess(path);
     } catch (e) {
@@ -422,6 +460,7 @@ function initStaticUploaders() {
     fileInputId: 'heroImageFile',
     statusId:    'heroUploadStatus',
     thumbId:     'heroImgPreview',
+    maxDimension: 1920,
     repoPathFn:  (ext) => `assets/hero-bg.${ext}`,
     onSuccess:   (path) => {
       // Update CSS on live site via style.css — just inform user to publish
@@ -437,6 +476,7 @@ function initStaticUploaders() {
     fileInputId: 'aboutImageFile',
     statusId:    'aboutUploadStatus',
     thumbId:     'aboutImgPreview',
+    maxDimension: 1400,
     repoPathFn:  (ext) => `assets/about-img.${ext}`,
     onSuccess:   async (path) => {
       // Update index.html to point to new about image
@@ -487,6 +527,7 @@ initImageUploader({
   fileInputId: 'exImageFile',
   statusId:    'exUploadStatus',
   thumbId:     'exImgPreview',
+  maxDimension: 900,
   repoPathFn:  (ext) => {
     const id = document.getElementById('exId').value.trim()
               || slugify(document.getElementById('exTitle').value.trim())
@@ -668,6 +709,7 @@ initImageUploader({
   fileInputId: 'galImageFile',
   statusId:    'galUploadStatus',
   thumbId:     'galImgPreview',
+  maxDimension: 1400,
   repoPathFn:  (ext) => {
     const id = document.getElementById('galId').value.trim()
               || slugify(document.getElementById('galLabel').value.trim())
@@ -798,6 +840,7 @@ initImageUploader({
   fileInputId: 'rvImageFile',
   statusId:    'rvUploadStatus',
   thumbId:     'rvImgPreview',
+  maxDimension: 400,
   repoPathFn:  (ext) => {
     const id = document.getElementById('rvId').value.trim() || `review-${Date.now()}`;
     return `assets/review-${id}.${ext}`;
