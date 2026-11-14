@@ -70,6 +70,7 @@ a { text-decoration: none; color: inherit; }
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   display: block;
 }
+.login-logo-img { height: 96px; width: auto; margin: 0 auto 10px; display: block; }
 .login-logo small {
   font-size: 0.78rem; color: var(--text-sm); letter-spacing: 0.15em; text-transform: uppercase;
 }
@@ -156,6 +157,7 @@ small { font-size: 0.75rem; color: var(--text-sm); }
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   display: block;
 }
+.sidebar-logo-img { height: 44px; width: auto; display: block; margin-bottom: 6px; }
 .sidebar-logo small { font-size: 0.7rem; color: var(--text-sm); letter-spacing: 0.1em; text-transform: uppercase; }
 
 .sidebar-nav { flex: 1; padding: 14px 10px; display: flex; flex-direction: column; gap: 4px; }
